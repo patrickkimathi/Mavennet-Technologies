@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects | Portfolio</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script defer src="js/script.js"></script>
+</head>
+<body>
+  <!-- ===== Header ===== -->
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">Projects</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="graphics.html">Graphics Design</a></li>
+        <li><a href="skills.html">Skills</a></li>
+        <li><a href="certifications.html">Certifications</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="blog.html">Blog</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ===== Projects Section ===== -->
+  <section class="projects">
+    <h2>My Projects</h2>
+
+    <!-- Tab Buttons -->
+    <div class="tab-buttons">
+      <button class="tab-button active" data-tab="hotel">🏨 Hotel Bookings Analysis</button>
+      <button class="tab-button" data-tab="uber">🚖 Uber Trip Analysis</button>
+      <button class="tab-button" data-tab="superstore">📊 Superstore Sales Dashboard</button>
+      <button class="tab-button" data-tab="hr">🏢 Human Resources Analysis</button>
+      <button class="tab-button" data-tab="mysql">💾 MySQL Database Design</button>
+    </div>
+
+    <!-- ===== Hotel Project ===== -->
+  <div id="hotel" class="tab-content active">
+      <img src="images/hotel1.png" alt="Hotel Analysis Dashboard" /><br />
+      <h2>🏨 Hotel Revenue & Bookings Analysis Dashboard</h2>
+      <p class="intro">
+        🚀 Turning Raw Data into Business Intelligence with Power BI.<br />
+        This project demonstrates how effective <strong>data modeling</strong> and <strong>visualization</strong> in Power BI
+        empower smarter decisions in the hospitality industry.
+      </p>
+
+      <div class="analysis-section">
+        <h3>📊 Project Overview</h3>
+        <ul>
+          <li>Integrates and analyzes hotel booking data to uncover trends in <strong>revenue performance, occupancy,</strong> and <strong>customer behavior</strong>.</li>
+          <li>Provides a <strong>360° operational and financial view</strong> for decision-makers.</li>
+        </ul>
+      </div>
+
+      <div class="analysis-section">
+        <h3>🧩 Data Modelling Approach</h3>
+        <ul>
+          <li>Used a <strong>Star Schema Model</strong> with fact and dimension tables.</li>
+          <li>Key DAX metrics: <em>RevPAR, Occupancy Rate, ADR, Cancellation %</em>.</li>
+          <li>Optimized relationships for interactive, dynamic insights.</li>
+        </ul>
+      </div>
+
+      <div class="analysis-section">
+        <h3>💡 Key Findings</h3>
+        <ul>
+          <li><strong>Total Revenue:</strong> $1.7B</li>
+          <li><strong>Occupancy Rate:</strong> 58%</li>
+          <li><strong>Top City:</strong> Mumbai</li>
+          <li><strong>Top Platform:</strong> MakeMyTrip</li>
+        </ul>
+      </div>
+
+      <div class="analysis-section">
+        <h3>🚀 Business Impact</h3>
+        <ul>
+          <li>Informed pricing and segment optimization.</li>
+          <li>Improved customer retention and revenue strategy.</li>
+        </ul>
+      </div>
+
+      <a href="https://github.com/patrickkimathi/Hotel-Bookings-and-Revenue-Analysis-PowerBI.git" class="btn" target="_blank">View Code on GitHub</a>
+    </div>
+
+    <!-- ===== Uber Project ===== -->
+    <div id="uber" class="tab-content">
+      <img src="images/uber1.png" alt="Uber Trip Analysis" /><br />
+      <h2>🚖 Uber Trip Analysis Dashboard</h2>
+
+      <div class="analysis-section">
+        <h3>📈 Overall Performance</h3>
+        <ul>
+          <li>104K total bookings generating <strong>$2M</strong> value.</li>
+          <li>Average distance: 3.36 miles | Average trip time: 16 mins.</li>
+        </ul>
+      </div>
+
+      <div class="analysis-section">
+        <h3>🌍 Trips by City</h3>
+        <ul>
+          <li><strong>Manhattan:</strong> 59.8K trips</li>
+          <li><strong>Brooklyn:</strong> 18.6K | <strong>Queens:</strong> 16.9K</li>
+        </ul>
+      </div>
+
+      <div class="analysis-section">
+        <h3>🚘 Vehicle Usage</h3>
+        <ul>
+          <li><strong>UberX</strong> leads with 39K passengers.</li>
+          <li>Others: Comfort, Black, XL (~17K each).</li>
+        </ul>
+      </div>
+
+      <div class="analysis-section">
+        <h3>💳 Payment Trends</h3>
+        <ul>
+          <li><strong>Uber Pay:</strong> 67% of transactions.</li>
+          <li><strong>Cash:</strong> 33% — still significant.</li>
+        </ul>
+      </div>
+
+      <a href="https://github.com/patrickkimathi/Uber-Trip-Analysis-Power-BI" class="btn" target="_blank">View Code on GitHub</a>
+    </div>  
+    
+      <!-- ===== Superstore Sales Dashboard Project ===== -->
+    <div id="superstore" class="tab-content">
+      <img src="images/superstore1.png" alt="Superstore Sales Dashboard" /><br />
+      <img src="images/superstore2.png" alt="Superstore Sales Dashboard" /><br />
+
+      <h2>🏬 Superstore Sales Dashboard | Power BI Project</h2>
+      <p class="intro">
+        Proud to present my latest analytics project — a <strong>Superstore Sales Dashboard</strong> built in
+        <strong>Power BI</strong>, showcasing insights on sales performance, profitability, shipping modes, and
+        regional distribution.
+      </p>
+
+      <div class="analysis-section">
+        <h3>📊 Dashboard Highlights</h3>
+        <ul>
+          <li>📈 <strong>Total Sales:</strong> 2.3M</li>
+          <li>💰 <strong>Profit Margin:</strong> 12.47%</li>
+          <li>🚚 <strong>Profitability by Shipping Mode and Region</strong></li>
+          <li>🕒 <strong>Order Processing Duration Distribution</strong></li>
+          <li>👥 <strong>Customer and Segment Analysis</strong></li>
+        </ul>
+      </div>
+
+      <div class="analysis-section">
+        <h3>🧠 Learning & Skills Gained</h3>
+        <ul>
+          <li>Deepened understanding of <strong>data modeling</strong> and <strong>DAX measures</strong>.</li>
+          <li>Enhanced skills in <strong>interactive dashboard design</strong> and business storytelling.</li>
+          <li>Transformed raw datasets into <strong>actionable business intelligence</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="analysis-section">
+        <h3>🙏 Acknowledgment</h3>
+        <p>
+          Grateful to <strong>Future Interns</strong> for providing a platform to apply and showcase these skills, and to
+          <strong>Kaggle</strong> for the open-source Superstore dataset that made this analysis possible.
+        </p>
+      </div>
+
+      <p class="quote">
+        🌟 <em>“Explore. Analyze. Visualize. — because every dataset holds a story worth uncovering.”</em>
+      </p>
+
+      <a href="https://github.com/patrickkimathi/Superstore-Sales-Dashboard" class="btn" target="_blank">View Code on GitHub</a>
+    </div>
+  
+
+    <!-- ===== HR Project ===== -->
+    <div id="hr" class="tab-content">
+      <img src="images/tableauhr1 (1).png" alt="HR Data Analysis" /><br />
+      <img src="images/tableauhr2.png" alt="HR Data Analysis" /><br />
+
+      <h3>🏢 Human Resources Analysis Dashboard | Tableau Public</h3>
+      <p>
+        Developed an interactive <strong>Tableau dashboard</strong> for HR teams to visualize workforce data and make
+        <strong>data-driven decisions</strong> aligned with Kenya’s HR context.
+      </p>
+
+      <h3>📊 KPIs</h3>
+      <ul>
+        <li><strong>Total Hired:</strong> 8,950 | <strong>Active:</strong> 7,950 | <strong>Terminated:</strong> 1,000</li>
+        <li><strong>Gender:</strong> 54% Male | 46% Female</li>
+        <li><strong>Top Age Group:</strong> 25–35 years</li>
+      </ul>
+
+      <h3>🔍 Insights</h3>
+      <ul>
+        <li>Gender balance shows equitable recruitment.</li>
+        <li>Bachelor’s degree holders dominate productivity.</li>
+        <li>Operations and Sales drive most salaries and headcount.</li>
+      </ul>
+
+      <p>
+        🔗 <a href="https://shorturl.at/zbl61" target="_blank" style="color: #0056b3;">View Tableau Dashboard</a>
+      </p>
+    </div>
+    <!
+
+    <!-- ===== MySQL Project ===== -->
+    <div id="mysql" class="tab-content">
+      <img src="images/kehealthdbms.png" alt="MySQL Database Design" /><br />
+
+      <h3>💾 Kenya Health Management Database (healthDB)</h3>
+      <p>
+        A relational database system built in <strong>MySQL</strong> to manage health data across Kenya — including
+        administrative units, healthcare facilities, staff, patients, visits, diagnoses, and prescriptions.
+      </p>
+
+      <h3>🌍 Overview</h3>
+      <p>
+        Reflects Kenya’s health hierarchy (Counties → Facilities). Designed for scalability, data integrity, and
+        analytics support.
+      </p>
+
+      <h3>⚙️ Key Features</h3>
+      <ul>
+        <li>Administrative units: counties, subcounties, wards.</li>
+        <li>Healthcare facilities and facility units.</li>
+        <li>Staff and patient records.</li>
+        <li>Visits, diagnoses, and prescriptions tracking.</li>
+      </ul>
+
+      <h3>🧠 Schema & Relationships</h3>
+      <p>
+        Includes primary/foreign keys for referential integrity. Each facility links to multiple staff, patients, and visits.
+      </p>
+
+      <h3>💻 Installation</h3>
+      <pre>
+        DROP DATABASE IF EXISTS healthDB;
+        CREATE DATABASE healthDB;
+        USE healthDB;
+        -- Execute provided CREATE TABLE statements
+      </pre>
+
+      <h3>🔍 Sample Query</h3>
+      <pre>
+        SELECT f.FACILITYNAME, c.COUNTYNAME
+        FROM facilities f
+        JOIN wards w ON f.WARDID = w.WARDID
+          JOIN subcounties s ON w.SUBCOUNTYID = s.SUBCOUNTYID
+        JOIN counties c ON s.COUNTYID = c.COUNTYID
+        WHERE c.COUNTYNAME = 'Nairobi';
+      </pre>
+
+      <p><strong>👨‍💻 Author:</strong> Patrick Kariuki</p>
+      <a href="https://github.com/patrickkimathi/KHealthCareDBMS?tab=readme-ov-file" class="btn" target="_blank">View Schema</a>
+    </div>
+  
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer>
+    <p>&copy; 2025 Patrick Kariuki @MavennetTech. All rights reserved.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,809 @@
+// ======================================
+// GLOBAL DOM LOADING HELPER
+// ======================================
+document.addEventListener("DOMContentLoaded", () => {
+  // Smooth initialization log
+  console.log("✅ Portfolio Script Loaded Successfully");
+
+  // ===============================
+  // 1️⃣ MOBILE MENU TOGGLE
+  // ===============================
+  const menuToggle = document.querySelector(".menu-toggle");
+  const navLinks = document.querySelector(".nav-links");
+
+  if (menuToggle && navLinks) {
+    menuToggle.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+  }
+
+  // ===============================
+  // 1️⃣.5️⃣ HERO CAROUSEL - SLIDING BACKGROUND IMAGES
+  // ===============================
+  const slides = document.querySelectorAll(".slide");
+  const indicators = document.querySelectorAll(".indicator");
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    if (slides.length > 0) {
+      slides.forEach(slide => slide.classList.remove("active"));
+      indicators.forEach(indicator => indicator.classList.remove("active"));
+
+      slides[index].classList.add("active");
+      if (indicators[index]) {
+        indicators[index].classList.add("active");
+      }
+    }
+  }
+
+  function nextSlide() {
+    if (slides.length > 0) {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+  }
+
+  function goToSlide(index) {
+    currentSlide = index;
+    showSlide(currentSlide);
+  }
+
+  // Auto-advance carousel every 5 seconds (only if slides exist)
+  let carouselInterval = null;
+  if (slides.length > 1) {
+    carouselInterval = setInterval(nextSlide, 5000);
+
+    // Add click handlers to indicators
+    indicators.forEach(indicator => {
+      indicator.addEventListener("click", () => {
+        const slideIndex = parseInt(indicator.dataset.slide);
+        goToSlide(slideIndex);
+        clearInterval(carouselInterval);
+        carouselInterval = setInterval(nextSlide, 5000);
+      });
+    });
+  }
+
+  if (slides.length > 0) {
+    showSlide(0);
+  }
+
+  // Initialize first slide
+  if (slides.length) {
+    showSlide(0);
+  }
+
+  // ===============================
+  // 2️⃣ SMOOTH SCROLL FOR ANCHORS
+  // ===============================
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute("href"));
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  });
+
+  // ===============================
+  // 3️⃣ HERO TEXT FADE-IN ON LOAD
+  // ===============================
+  const heroText = document.querySelector(".hero-text");
+  if (heroText) {
+    heroText.style.opacity = "0";
+    heroText.style.transform = "translateY(30px)";
+
+    setTimeout(() => {
+      heroText.style.transition = "all 1s ease-out";
+      heroText.style.opacity = "1";
+      heroText.style.transform = "translateY(0)";
+    }, 200);
+  }
+
+  // ===============================
+  // 4️⃣ SCROLL REVEAL FOR CARDS
+  // ===============================
+  const cards = document.querySelectorAll(".card");
+
+  function revealOnScroll() {
+    const triggerBottom = window.innerHeight * 0.85;
+    cards.forEach(card => {
+      const cardTop = card.getBoundingClientRect().top;
+      if (cardTop < triggerBottom) {
+        card.classList.add("show");
+      }
+    });
+  }
+
+  if (cards.length) {
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll();
+  }
+
+  // ===============================
+  // 5️⃣ CONTACT FORM VALIDATION
+  // ===============================
+  const contactForm = document.getElementById("contactForm");
+  if (contactForm) {
+    contactForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const name = contactForm.querySelector('input[type="text"]');
+      const email = contactForm.querySelector('input[type="email"]');
+      const company = contactForm.querySelector('#company');
+      const message = contactForm.querySelector("textarea");
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      let isValid = true;
+
+      if (name.value.trim().length < 3) {
+        alert("⚠️ Please enter a valid name (at least 3 characters).");
+        isValid = false;
+      }
+
+      if (!emailPattern.test(email.value.trim())) {
+        alert("⚠️ Please enter a valid email address.");
+        isValid = false;
+      }
+
+      if (message.value.trim().length < 10) {
+        alert("⚠️ Your message should be at least 10 characters long.");
+        isValid = false;
+      }
+
+      if (isValid) {
+        const subject = `Contact request from ${name.value.trim()}`;
+        const body = `Name: ${name.value.trim()}\nEmail: ${email.value.trim()}\nCompany: ${company.value.trim() || 'N/A'}\n\nMessage:\n${message.value.trim()}`;
+        const mailtoLink = `mailto:patkimathi148@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailtoLink;
+        contactForm.reset();
+      }
+    });
+  }
+
+  // ===============================
+  // 5️⃣ BOOKING FORM VALIDATION
+  // ===============================
+  const bookingForm = document.getElementById("bookingForm");
+  if (bookingForm) {
+    bookingForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const name = bookingForm.querySelector('#name');
+      const email = bookingForm.querySelector('#email');
+      const course = bookingForm.querySelector('#course');
+      const date = bookingForm.querySelector('#date');
+      const message = bookingForm.querySelector('#message');
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      let isValid = true;
+
+      if (name.value.trim().length < 3) {
+        alert("⚠️ Please enter a valid name (at least 3 characters). ");
+        isValid = false;
+      }
+
+      if (!emailPattern.test(email.value.trim())) {
+        alert("⚠️ Please enter a valid email address.");
+        isValid = false;
+      }
+
+      if (!course.value) {
+        alert("⚠️ Please select a course to book.");
+        isValid = false;
+      }
+
+      if (!date.value) {
+        alert("⚠️ Please select a preferred date.");
+        isValid = false;
+      }
+
+      if (message.value.trim().length < 10) {
+        alert("⚠️ Please tell me more about your goals in at least 10 characters.");
+        isValid = false;
+      }
+
+      if (isValid) {
+        const subject = `Training booking request: ${course.value}`;
+        const body = `Name: ${name.value.trim()}\nEmail: ${email.value.trim()}\nCourse: ${course.value}\nPreferred Date: ${date.value}\n\nMessage:\n${message.value.trim()}`;
+        const mailtoLink = `mailto:patkimathi148@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = mailtoLink;
+        bookingForm.reset();
+      }
+    });
+  }
+
+  // ===============================
+  // 6️⃣ DARK MODE TOGGLE
+  // ===============================
+  const darkModeToggle = document.getElementById("darkModeToggle");
+  const body = document.body;
+
+  if (darkModeToggle) {
+    // Load saved theme
+    if (localStorage.getItem("darkMode") === "enabled") {
+      body.classList.add("dark-mode");
+      darkModeToggle.checked = true;
+    }
+
+    darkModeToggle.addEventListener("change", () => {
+      if (darkModeToggle.checked) {
+        body.classList.add("dark-mode");
+        localStorage.setItem("darkMode", "enabled");
+      } else {
+        body.classList.remove("dark-mode");
+        localStorage.setItem("darkMode", "disabled");
+      }
+    });
+  }
+
+  // ===============================
+  // 7️⃣ BACK TO TOP BUTTON
+  // ===============================
+  const backToTopButton = document.getElementById("backToTop");
+  if (backToTopButton) {
+    window.addEventListener("scroll", () => {
+      backToTopButton.style.display = window.scrollY > 300 ? "block" : "none";
+    });
+
+    backToTopButton.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  // ===============================
+  // 8️⃣ PROJECTS PAGE – TAB SWITCHING
+  // ===============================
+  const tabButtons = document.querySelectorAll(".tab-button");
+  const tabContents = document.querySelectorAll(".tab-content");
+
+  if (tabButtons.length && tabContents.length) {
+    tabButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        tabButtons.forEach(b => b.classList.remove("active"));
+        tabContents.forEach(c => c.classList.remove("active"));
+
+        button.classList.add("active");
+        const target = document.getElementById(button.dataset.tab);
+        if (target) {
+          target.classList.add("active");
+          target.classList.add("fade-in");
+          setTimeout(() => target.classList.remove("fade-in"), 500);
+        }
+      });
+    });
+  }
+
+  // ===============================
+  // 9️⃣ PROJECTS REVEAL ON SCROLL
+  // ===============================
+  const projectSections = document.querySelectorAll(".tab-content");
+
+  function revealProjectsOnScroll() {
+    const trigger = window.innerHeight * 0.9;
+    projectSections.forEach(section => {
+      const top = section.getBoundingClientRect().top;
+      if (top < trigger) {
+        section.classList.add("show");
+      }
+    });
+  }
+
+  if (projectSections.length) {
+    window.addEventListener("scroll", revealProjectsOnScroll);
+    revealProjectsOnScroll();
+  }
+
+  // ===============================
+  // 🔟 READ MORE / LESS BUTTONS
+  // ===============================
+  const readMoreBtns = document.querySelectorAll(".read-more-btn");
+  readMoreBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const content = btn.previousElementSibling;
+      const isVisible = content.style.display === "block";
+      content.style.display = isVisible ? "none" : "block";
+      btn.textContent = isVisible ? "Read more..." : "Read less...";
+    });
+  });
+
+  // ===============================
+  // 1️⃣1️⃣ THIRD-PARTY LIBRARIES INIT
+  // ===============================
+  if (typeof AOS !== "undefined") {
+    AOS.init({ duration: 1000, once: true });
+  }
+
+  if (typeof Swiper !== "undefined") {
+    new Swiper(".swiper-container", {
+      loop: true,
+      autoplay: { delay: 5000 },
+      pagination: { el: ".swiper-pagination", clickable: true },
+      navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+    });
+  }
+
+  if (typeof lightbox !== "undefined") {
+    lightbox.option({ resizeDuration: 200, wrapAround: true });
+  }
+
+  if (typeof Typed !== "undefined") {
+    new Typed(".typed-text", {
+      strings: ["Developer.", "Data Analyst.", "Creator."],
+      typeSpeed: 100,
+      backSpeed: 50,
+      loop: true,
+    });
+  }
+
+  if (typeof CountUp !== "undefined") {
+    const stats = document.querySelectorAll(".stat-number");
+    stats.forEach(stat => {
+      const endValue = parseInt(stat.getAttribute("data-target"), 10);
+      const counter = new CountUp(stat, endValue);
+      if (!counter.error) counter.start();
+    });
+  }
+
+  if (typeof Isotope !== "undefined") {
+    const iso = new Isotope(".portfolio-container", {
+      itemSelector: ".portfolio-item",
+      layoutMode: "fitRows",
+    });
+
+    const filterButtons = document.querySelectorAll(".filter-button");
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const filterValue = button.getAttribute("data-filter");
+        iso.arrange({ filter: filterValue });
+        filterButtons.forEach(b => b.classList.remove("active"));
+        button.classList.add("active");
+      });
+    });
+  }
+
+  if (window.$ && $(".justified-gallery").length) {
+    $(".justified-gallery").justifiedGallery({
+      rowHeight: 200,
+      lastRow: "nojustify",
+      margins: 5,
+    });
+  }
+
+  // ===============================
+  // 1️⃣2️⃣ LMS TRAINING PACKAGE FUNCTIONALITY
+  // ===============================
+  const toggleBtns = document.querySelectorAll(".toggle-btn");
+  const packageModules = document.querySelectorAll(".package-modules");
+  const moduleCheckboxes = document.querySelectorAll(".module-checkbox");
+
+  // Toggle Package Modules
+  if (toggleBtns.length) {
+    toggleBtns.forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const packageName = btn.getAttribute("data-package");
+        const packageElement = btn.closest(".training-package");
+        const modulesContainer = packageElement.querySelector(".package-modules");
+        
+        // Toggle expanded class
+        btn.classList.toggle("expanded");
+        modulesContainer.classList.toggle("hidden");
+        
+        // Add smooth animation
+        if (!modulesContainer.classList.contains("hidden")) {
+          modulesContainer.style.maxHeight = modulesContainer.scrollHeight + "px";
+        } else {
+          modulesContainer.style.maxHeight = "0";
+        }
+      });
+    });
+  }
+
+  // Update Progress on Checkbox Change
+  if (moduleCheckboxes.length) {
+    moduleCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener("change", () => {
+        const packageName = checkbox.getAttribute("data-package");
+        updatePackageProgress(packageName);
+        
+        // Save progress to localStorage
+        saveProgress(packageName);
+      });
+    });
+  }
+
+  // Calculate and Update Progress
+  function updatePackageProgress(packageName) {
+    const packageElement = document.querySelector(`.training-package [data-package="${packageName}"]`).closest(".training-package");
+    const checkboxes = packageElement.querySelectorAll(`.module-checkbox[data-package="${packageName}"]`);
+    const checkedCount = packageElement.querySelectorAll(`.module-checkbox[data-package="${packageName}"]:checked`).length;
+    
+    const progressPercentage = Math.round((checkedCount / checkboxes.length) * 100);
+    
+    const progressBar = packageElement.querySelector(".progress-fill");
+    const progressText = packageElement.querySelector(".progress-text");
+    
+    progressBar.style.width = progressPercentage + "%";
+    progressText.textContent = progressPercentage + "% Complete";
+    
+    // Add celebration animation at 100%
+    if (progressPercentage === 100) {
+      packageElement.classList.add("completed");
+      showCelebration(packageElement);
+    } else {
+      packageElement.classList.remove("completed");
+    }
+  }
+
+  // Show Celebration Animation
+  function showCelebration(element) {
+    const progressBar = element.querySelector(".progress-bar-container");
+    progressBar.style.animation = "pulse 0.6s ease";
+    setTimeout(() => {
+      progressBar.style.animation = "";
+    }, 600);
+  }
+
+  // Save Progress to localStorage
+  function saveProgress(packageName) {
+    const packageElement = document.querySelector(`.training-package [data-package="${packageName}"]`).closest(".training-package");
+    const checkboxes = packageElement.querySelectorAll(`.module-checkbox[data-package="${packageName}"]`);
+    const checkedModules = [];
+    
+    checkboxes.forEach((checkbox, index) => {
+      if (checkbox.checked) {
+        checkedModules.push(index);
+      }
+    });
+    
+    localStorage.setItem(`training_progress_${packageName}`, JSON.stringify(checkedModules));
+  }
+
+  // Load Progress from localStorage
+  function loadProgress(packageName) {
+    const saved = localStorage.getItem(`training_progress_${packageName}`);
+    if (saved) {
+      const checkedIndices = JSON.parse(saved);
+      const packageElement = document.querySelector(`.training-package [data-package="${packageName}"]`).closest(".training-package");
+      const checkboxes = packageElement.querySelectorAll(`.module-checkbox[data-package="${packageName}"]`);
+      
+      checkedIndices.forEach(index => {
+        if (checkboxes[index]) {
+          checkboxes[index].checked = true;
+        }
+      });
+      
+      updatePackageProgress(packageName);
+    }
+  }
+
+  // Load all saved progress on page load
+  const allPackages = ["excel", "sheets", "powerbi", "tableau", "python", "sql", "marketing"];
+  allPackages.forEach(pkg => {
+    loadProgress(pkg);
+  });
+
+  // ===============================
+  // 1️⃣3️⃣ MODULE TOPICS EXPAND/COLLAPSE
+  // ===============================
+  const moduleExpandBtns = document.querySelectorAll(".module-expand-btn");
+  
+  if (moduleExpandBtns.length) {
+    moduleExpandBtns.forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const moduleItem = btn.closest(".module-item");
+        const moduleTopics = moduleItem.querySelector(".module-topics");
+        
+        // Toggle expanded state
+        btn.classList.toggle("active");
+        moduleTopics.classList.toggle("hidden");
+      });
+    });
+  }
+
+  // Add CSS for animation
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    
+    .training-package.completed .progress-bar-container {
+      background: linear-gradient(90deg, rgba(0, 86, 214, 0.05) 0%, rgba(255, 122, 0, 0.05) 100%);
+    }
+  `;
+  document.head.appendChild(style);
+
+  // ===============================
+  // 🛒 E-COMMERCE SHOPPING CART FUNCTIONALITY
+  // ===============================
+  
+  // Shopping Cart Data
+  let shoppingCart = [];
+  
+  // DOM Elements
+  const cartButtons = document.querySelectorAll(".btn-add-cart");
+  const cartOverlay = document.getElementById("cartOverlay");
+  const shoppingCartElement = document.getElementById("shoppingCart");
+  const closeCartBtn = document.getElementById("closeCart");
+  const cartItemsContainer = document.getElementById("cartItems");
+  const subtotalElement = document.getElementById("subtotal");
+  const taxElement = document.getElementById("tax");
+  const totalElement = document.getElementById("total");
+  const checkoutBtn = document.getElementById("checkoutBtn");
+  const continueShoppingBtn = document.getElementById("continueShopping");
+  const checkoutModal = document.getElementById("checkoutModal");
+  const closeCheckoutBtn = document.getElementById("closeCheckout");
+  const checkoutForm = document.getElementById("checkoutForm");
+  const orderSummaryElement = document.getElementById("orderSummary");
+  const checkoutTotalElement = document.getElementById("checkoutTotal");
+
+  // Add to Cart Button Handlers
+  cartButtons.forEach(button => {
+    button.addEventListener("click", () => {
+      const courseName = button.getAttribute("data-course");
+      const coursePrice = parseInt(button.getAttribute("data-price"));
+      
+      addToCart(courseName, coursePrice);
+      showCartNotification(button);
+      openCart();
+    });
+  });
+
+  function addToCart(courseName, coursePrice) {
+    // Check if item already exists
+    const existingItem = shoppingCart.find(item => item.name === courseName);
+    
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      shoppingCart.push({
+        name: courseName,
+        price: coursePrice,
+        quantity: 1
+      });
+    }
+    
+    updateCart();
+  }
+
+  function removeFromCart(courseName) {
+    shoppingCart = shoppingCart.filter(item => item.name !== courseName);
+    updateCart();
+  }
+
+  function formatCurrency(amount) {
+    return `KES ${amount.toLocaleString("en-KE")}`;
+  }
+
+  function updateCart() {
+    // Clear and rebuild cart items display
+    cartItemsContainer.innerHTML = "";
+    
+    if (shoppingCart.length === 0) {
+      cartItemsContainer.innerHTML = '<p class="empty-cart-message">Your cart is empty</p>';
+      checkoutBtn.disabled = true;
+    } else {
+      shoppingCart.forEach(item => {
+        const cartItem = document.createElement("div");
+        cartItem.className = "cart-item";
+        cartItem.innerHTML = `
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.name}</div>
+            <div class="cart-item-price">${formatCurrency(item.price)}</div>
+          </div>
+          <button class="cart-item-remove" data-course="${item.name}">×</button>
+        `;
+        
+        cartItem.querySelector(".cart-item-remove").addEventListener("click", () => {
+          removeFromCart(item.name);
+        });
+        
+        cartItemsContainer.appendChild(cartItem);
+      });
+      
+      checkoutBtn.disabled = false;
+    }
+    
+    // Update summary
+    updateCartSummary();
+  }
+
+  function updateCartSummary() {
+    const subtotal = shoppingCart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const tax = Math.round(subtotal * 0.1);
+    const total = subtotal + tax;
+    
+    subtotalElement.textContent = formatCurrency(subtotal);
+    taxElement.textContent = formatCurrency(tax);
+    totalElement.textContent = formatCurrency(total);
+    
+    // Update checkout modal total
+    checkoutTotalElement.textContent = formatCurrency(total);
+  }
+
+  function showCartNotification(button) {
+    const originalText = button.innerHTML;
+    button.innerHTML = '<span>✓ Added!</span>';
+    button.style.background = '#10b981';
+    
+    setTimeout(() => {
+      button.innerHTML = originalText;
+      button.style.background = '';
+    }, 1500);
+  }
+
+  function openCart() {
+    shoppingCartElement.classList.add("active");
+    cartOverlay.classList.add("active");
+  }
+
+  function closeCart() {
+    shoppingCartElement.classList.remove("active");
+    cartOverlay.classList.remove("active");
+  }
+
+  // Cart Control Buttons
+  if (closeCartBtn) {
+    closeCartBtn.addEventListener("click", closeCart);
+  }
+
+  if (cartOverlay) {
+    cartOverlay.addEventListener("click", closeCart);
+  }
+
+  if (continueShoppingBtn) {
+    continueShoppingBtn.addEventListener("click", closeCart);
+  }
+
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener("click", () => {
+      closeCart();
+      openCheckout();
+    });
+  }
+
+  // ===============================
+  // 💳 CHECKOUT FUNCTIONALITY
+  // ===============================
+  
+  function openCheckout() {
+    if (!checkoutModal || !orderSummaryElement) return;
+
+    // Update order summary
+    const orderItems = shoppingCart.map(item => `
+      <div class="summary-row">
+        <span>${item.name}</span>
+        <span>$${(item.price / 100).toFixed(2)}</span>
+      </div>
+    `).join("");
+    
+    orderSummaryElement.innerHTML = orderItems;
+    checkoutModal.classList.add("active");
+  }
+
+  function closeCheckout() {
+    if (checkoutModal) {
+      checkoutModal.classList.remove("active");
+    }
+  }
+
+  if (closeCheckoutBtn) {
+    closeCheckoutBtn.addEventListener("click", closeCheckout);
+  }
+
+  if (checkoutModal) {
+    checkoutModal.addEventListener("click", (e) => {
+      if (e.target === checkoutModal) {
+        closeCheckout();
+      }
+    });
+  }
+
+  // Checkout Form Submission
+  if (checkoutForm) {
+    checkoutForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    
+    // Validate form
+    const inputs = checkoutForm.querySelectorAll("input");
+    let isValid = true;
+    
+    inputs.forEach(input => {
+      if (!input.value.trim()) {
+        isValid = false;
+        input.style.borderColor = "#e74c3c";
+      } else {
+        input.style.borderColor = "";
+      }
+    });
+    
+    if (!isValid) {
+      alert("Please fill in all fields");
+      return;
+    }
+    
+    // Get form data
+    const formData = new FormData(checkoutForm);
+    const orderData = {
+      courses: shoppingCart,
+      customerInfo: {
+        name: inputs[0].value,
+        email: inputs[1].value,
+        address: inputs[2].value,
+        city: inputs[3].value
+      },
+      timestamp: new Date().toLocaleString()
+    };
+    
+    // Save order to localStorage
+    localStorage.setItem("lastOrder", JSON.stringify(orderData));
+    
+    // Show success message
+    alert(`✓ Order placed successfully!\\n\\nThank you for your purchase. Your courses have been added to your account. Check your email at ${inputs[1].value} for login credentials and course access links.\\n\\nOrder ID: ${Date.now()}`);
+    
+    // Reset and close
+    shoppingCart = [];
+    updateCart();
+    closeCheckout();
+    checkoutForm.reset();
+    });
+  }
+
+  // ===============================
+  // 🔍 SEARCH AND FILTER (Optional)
+  // ===============================
+  
+  const searchInput = document.getElementById("searchCourses");
+  const sortSelect = document.getElementById("sortCourses");
+  const courseCards = document.querySelectorAll(".course-card");
+
+  if (searchInput) {
+    searchInput.addEventListener("input", () => {
+      const searchTerm = searchInput.value.toLowerCase();
+      
+      courseCards.forEach(card => {
+        const courseName = card.querySelector("h3").textContent.toLowerCase();
+        if (courseName.includes(searchTerm)) {
+          card.style.display = "";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    });
+  }
+
+  if (sortSelect) {
+    sortSelect.addEventListener("change", (e) => {
+      const sortValue = e.target.value;
+      const cardsArray = Array.from(courseCards);
+      const container = document.querySelector(".courses-container");
+      
+      if (sortValue === "price-low") {
+        cardsArray.sort((a, b) => {
+          const priceA = parseInt(a.getAttribute("data-price"));
+          const priceB = parseInt(b.getAttribute("data-price"));
+          return priceA - priceB;
+        });
+      } else if (sortValue === "price-high") {
+        cardsArray.sort((a, b) => {
+          const priceA = parseInt(a.getAttribute("data-price"));
+          const priceB = parseInt(b.getAttribute("data-price"));
+          return priceB - priceA;
+        });
+      }
+      // "featured" and "newest" keep original order
+      
+      // Reorder DOM
+      cardsArray.forEach(card => {
+        container.appendChild(card);
+      });
+    });
+  }
+});
+
