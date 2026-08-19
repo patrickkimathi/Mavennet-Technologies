@@ -7,6 +7,7 @@
   <meta name="theme-color" content="#1d05f6" />
   <title>Blog | Mavennet Technologies</title>
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   <script defer src="js/script.js"></script>
 </head>
 <body>
@@ -30,76 +31,85 @@
 
   
 
-  <!-- ===== Blog Section ===== -->
-  <main>
-    <section class="hero">
-      <div class="cards">
-        <!-- === Blog 1 === -->
-        <article class="card">
-          <h2>🛒 Superstore Sales Dashboard — Power BI Project</h2>
-          <p class="date">Date: October 8, 2025</p>
-          <p>In this project, I built a Superstore Sales Dashboard using Power BI to explore sales performance, profitability, customer behavior, and operational efficiency.</p>
-          <p>The dashboard transforms the open-source Superstore dataset from Kaggle into actionable business insights, showcasing my skills in data modeling, DAX, and data storytelling.</p>
-          <p>Special thanks to Future Interns for providing the learning environment to apply and showcase my analytics capabilities, and to Kaggle for making high-quality, open datasets accessible to learners and professionals worldwide.</p>
-
-          <div class="read-more-content">
-            <h3>Project Objective</h3>
-            <p>The dashboard analyzes Superstore sales data to uncover trends influencing profitability and customer satisfaction. It includes metrics like total sales, profit margins, shipping mode performance, and order duration distribution.</p>
-            <p>Key Visuals include KPI Cards, Donut Charts, Bar Charts, Combo Charts, and Histograms. Each offers insight into sales patterns, top-performing categories, and customer segments.</p>
-            <p><strong>Tools:</strong> Power BI, DAX, Power Query</p>
-            <h3>Conclusion</h3>
-            <p>This project demonstrates how to transform raw datasets into powerful business intelligence dashboards for better decision-making.</p>
-            <h3>Acknowledgements</h3>
-            <p>Thanks to Future Interns and Kaggle for making this project possible.</p>
-          </div>
-          <span class="read-more-btn">Read more...</span>
-        </article>
-
-        <!-- === Blog 2 === -->
-        <article class="card">
-          <h2>Web Development Trends in 2025</h2>
-          <p class="date">Date: February 15, 2025</p>
-          <p>As technology evolves, so do the trends shaping modern web development. In 2025, developers are embracing smarter tools, AI-driven experiences, and highly responsive designs to improve performance and accessibility.</p>
-          <div class="read-more-content">
-            <ul>
-              <li><strong>AI-Powered Websites:</strong> Personalized content through machine learning algorithms.</li>
-              <li><strong>Low-Code Platforms:</strong> Faster deployment with tools like Webflow and Bubble.</li>
-              <li><strong>Serverless Architecture:</strong> More scalable, cost-effective backend solutions.</li>
-              <li><strong>Cybersecurity Focus:</strong> Enhanced protocols to protect user data and privacy.</li>
-            </ul>
-            <p>These trends enable developers to build user-centered, secure, and efficient digital experiences. Staying ahead of these innovations ensures competitive advantage in the fast-paced web industry.</p>
-          </div>
-          <span class="read-more-btn">Read more...</span>
-        </article>
-
-        <!-- === Blog 3 === -->
-        <article class="card">
-          <h2>🎨 The Importance of UI/UX Design</h2>
-          <p class="date">Date: March 10, 2025</p>
-          <p>UI/UX design plays a crucial role in creating intuitive digital products that meet user needs. A seamless experience can significantly boost engagement and retention rates.</p>
-          <div class="read-more-content">
-            <p>Good UI focuses on the visual appeal, while UX ensures smooth interaction and flow. Together, they enhance satisfaction and encourage brand loyalty.</p>
-            <p>Designers today combine empathy, research, and testing to build interfaces that simplify complex processes and delight users.</p>
-            <p>Ultimately, investing in UI/UX isn’t just about aesthetics — it’s about delivering functional, accessible, and impactful experiences.</p>
-          </div>
-          <span class="read-more-btn">Read more...</span>
-        </article>
-
+  <main class="blog-page">
+    <section class="blog-hero">
+      <div>
+        <span class="eyebrow">Mavennet insights</span>
+        <h1>Ideas, projects, and practical lessons.</h1>
+        <p>Write about data, design, digital growth, and the work behind better decisions.</p>
       </div>
+    </section>
+
+    <section class="blog-workspace" aria-labelledby="blog-heading">
+      <div class="blog-heading-row">
+        <div>
+          <span class="eyebrow">Latest writing</span>
+          <h2 id="blog-heading">From the journal</h2>
+        </div>
+        <span class="blog-storage-note"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> Saved in this browser</span>
+      </div>
+
+      <div class="blog-tools">
+        <section class="blog-editor" aria-labelledby="editor-heading">
+          <div class="tool-heading">
+            <span class="tool-icon"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></span>
+            <div>
+              <h2 id="editor-heading">Write a post</h2>
+              <p>Create a draft and publish it to this blog instantly.</p>
+            </div>
+          </div>
+          <form id="blogPostForm" class="blog-post-form">
+            <label for="postTitle">Title</label>
+            <input id="postTitle" name="title" type="text" placeholder="Post title" required maxlength="120" />
+            <div class="blog-form-row">
+              <div>
+                <label for="postCategory">Category</label>
+                <select id="postCategory" name="category">
+                  <option>Data & Analytics</option>
+                  <option>Design</option>
+                  <option>Digital Growth</option>
+                  <option>Learning</option>
+                </select>
+              </div>
+              <div>
+                <label for="postDate">Date</label>
+                <input id="postDate" name="date" type="date" required />
+              </div>
+            </div>
+            <label for="postExcerpt">Short introduction</label>
+            <textarea id="postExcerpt" name="excerpt" rows="3" placeholder="What is this post about?" required maxlength="280"></textarea>
+            <label for="postContent">Post content</label>
+            <textarea id="postContent" name="content" rows="7" placeholder="Write your full post here..." required></textarea>
+            <button class="btn btn-primary" type="submit"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Publish post</button>
+          </form>
+        </section>
+
+        <aside class="facebook-source" aria-labelledby="facebook-source-heading">
+          <span class="facebook-source-icon"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></span>
+          <span class="eyebrow">Facebook source</span>
+          <h2 id="facebook-source-heading">Share updates from Facebook</h2>
+          <p>Use your Facebook page for social publishing, then link readers back here for your full articles and project notes.</p>
+          <a class="btn btn-secondary" href="https://www.facebook.com/profile.php?id=100037748263947" target="_blank" rel="noopener"><i class="fa-brands fa-facebook" aria-hidden="true"></i> Open Facebook page</a>
+          <small>Automatic Facebook imports require a secure Graph API connection with a Page Access Token.</small>
+          <iframe class="facebook-feed" title="Mavennet Technologies Facebook posts" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100037748263947&amp;tabs=timeline&amp;width=500&amp;height=520&amp;small_header=false&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=false" loading="lazy"></iframe>
+        </aside>
+      </div>
+
+      <div id="blogPostsGrid" class="blog-posts-grid" aria-live="polite"></div>
     </section>
   </main>
 
   <!-- ===== Footer ===== -->
   <footer>
-    <p>&copy; 2022&ndash;2026 Mavennet Technologies. All rights reserved.</p>
     <nav class="footer-social" aria-label="Social media links">
-      <a href="https://www.facebook.com/profile.php?id=100037748263947" target="_blank" rel="noopener">Facebook</a>
-      <a href="https://www.linkedin.com/in/patkariuki/" target="_blank" rel="noopener">LinkedIn</a>
-      <a href="https://www.tiktok.com/@mavennettech" target="_blank" rel="noopener">TikTok</a>
-      <a href="https://x.com/patk_kariuki" target="_blank" rel="noopener">X</a>
-      <a href="https://www.youtube.com/@MavennetTechnologies" target="_blank" rel="noopener">YouTube</a>
-      <a href="https://www.instagram.com/pkariuki2/" target="_blank" rel="noopener">Instagram</a>
+      <a class="social-facebook" href="https://www.facebook.com/profile.php?id=100037748263947" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i><span>Facebook</span></a>
+      <a class="social-linkedin" href="https://www.linkedin.com/in/patkariuki/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i><span>LinkedIn</span></a>
+      <a class="social-tiktok" href="https://www.tiktok.com/@mavennettech" target="_blank" rel="noopener"><i class="fa-brands fa-tiktok" aria-hidden="true"></i><span>TikTok</span></a>
+      <a class="social-x" href="https://x.com/patk_kariuki" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i><span>X</span></a>
+      <a class="social-youtube" href="https://www.youtube.com/@MavennetTechnologies" target="_blank" rel="noopener"><i class="fa-brands fa-youtube" aria-hidden="true"></i><span>YouTube</span></a>
+      <a class="social-instagram" href="https://www.instagram.com/pkariuki2/" target="_blank" rel="noopener"><i class="fa-brands fa-instagram" aria-hidden="true"></i><span>Instagram</span></a>
     </nav>
+    <p>&copy; 2022&ndash;2026 Mavennet Technologies. All rights reserved.</p>
   </footer>
 </body>
 </html>

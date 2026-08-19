@@ -805,5 +805,126 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
+  const blogPostsGrid = document.getElementById("blogPostsGrid");
+  const blogPostForm = document.getElementById("blogPostForm");
+
+  if (blogPostsGrid && blogPostForm) {
+    const defaultBlogPosts = [
+      {
+        id: "superstore-dashboard",
+        title: "Superstore Sales Dashboard: A Power BI Project",
+        category: "Data & Analytics",
+        date: "2025-10-08",
+        excerpt: "How a Power BI dashboard turns sales data into clearer decisions about profitability, customers, and operations.",
+        content: "This project uses data modeling, DAX, and Power Query to explore sales performance, profitability, customer behavior, and operational efficiency. The dashboard brings KPI cards, category analysis, shipping performance, and customer segments into one decision-ready view."
+      },
+      {
+        id: "web-trends-2025",
+        title: "Web Development Trends in 2025",
+        category: "Digital Growth",
+        date: "2025-02-15",
+        excerpt: "A practical look at the tools and approaches shaping responsive, accessible, and resilient websites.",
+        content: "AI-assisted workflows, low-code tools, serverless architecture, and stronger privacy practices are changing how teams build for the web. The best results still come from combining new tools with clear user needs and disciplined accessibility work."
+      },
+      {
+        id: "ui-ux-design",
+        title: "Why UI/UX Design Matters",
+        category: "Design",
+        date: "2025-03-10",
+        excerpt: "Good design makes complex products easier to understand, use, and trust.",
+        content: "UI shapes the visual language of a product while UX shapes the journey through it. Together, research, empathy, prototyping, and testing help teams build interfaces that are useful, accessible, and memorable."
+      }
+    ];
+
+    let savedBlogPosts = JSON.parse(localStorage.getItem("mavennetBlogPosts") || "[]");
+    if (!Array.isArray(savedBlogPosts)) {
+      savedBlogPosts = [];
+    }
+
+    function formatBlogDate(dateValue) {
+      return new Intl.DateTimeFormat("en", {
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+      }).format(new Date(`${dateValue}T00:00:00`));
+    }
+
+    function renderBlogPosts() {
+      blogPostsGrid.replaceChildren();
+      [...savedBlogPosts, ...defaultBlogPosts].forEach(post => {
+        const article = document.createElement("article");
+        article.className = "blog-post-card";
+        article.dataset.postId = post.id;
+
+        const meta = document.createElement("div");
+        meta.className = "post-meta";
+        meta.innerHTML = `<span>${post.category}</span><time datetime="${post.date}">${formatBlogDate(post.date)}</time>`;
+
+        const title = document.createElement("h3");
+        title.textContent = post.title;
+
+        const excerpt = document.createElement("p");
+        excerpt.className = "post-excerpt";
+        excerpt.textContent = post.excerpt;
+
+        const content = document.createElement("p");
+        content.className = "post-content";
+        content.textContent = post.content;
+
+        const actions = document.createElement("div");
+        actions.className = "post-actions";
+
+        const readMore = document.createElement("button");
+        readMore.className = "post-read-more";
+        readMore.type = "button";
+        readMore.textContent = "Read more";
+        readMore.addEventListener("click", () => {
+          const expanded = article.classList.toggle("is-expanded");
+          readMore.textContent = expanded ? "Show less" : "Read more";
+        });
+        actions.appendChild(readMore);
+
+        if (savedBlogPosts.some(savedPost => savedPost.id === post.id)) {
+          const deletePost = document.createElement("button");
+          deletePost.className = "post-delete";
+          deletePost.type = "button";
+          deletePost.textContent = "Delete";
+          deletePost.addEventListener("click", () => {
+            savedBlogPosts = savedBlogPosts.filter(savedPost => savedPost.id !== post.id);
+            localStorage.setItem("mavennetBlogPosts", JSON.stringify(savedBlogPosts));
+            renderBlogPosts();
+          });
+          actions.appendChild(deletePost);
+        }
+
+        article.append(meta, title, excerpt, content, actions);
+        blogPostsGrid.appendChild(article);
+      });
+    }
+
+    blogPostForm.querySelector("#postDate").value = new Date().toISOString().slice(0, 10);
+    blogPostForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const formData = new FormData(blogPostForm);
+      const newPost = {
+        id: `local-${Date.now()}`,
+        title: formData.get("title").trim(),
+        category: formData.get("category"),
+        date: formData.get("date"),
+        excerpt: formData.get("excerpt").trim(),
+        content: formData.get("content").trim()
+      };
+
+      savedBlogPosts.unshift(newPost);
+      localStorage.setItem("mavennetBlogPosts", JSON.stringify(savedBlogPosts));
+      blogPostForm.reset();
+      blogPostForm.querySelector("#postDate").value = new Date().toISOString().slice(0, 10);
+      renderBlogPosts();
+      blogPostsGrid.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    renderBlogPosts();
+  }
 });
 
