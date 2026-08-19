@@ -2012,6 +2012,34 @@ font-weight: 600;
 .project-info h3,
 .gallery-caption h4,
 .contact-card h4,
+
+.hero,
+.home-hero-copy,
+.about-copy,
+.leadership-copy,
+.contact-hero .hero-text,
+.training-hero .hero-text,
+.ecommerce-hero .hero-content {
+  text-align: center;
+}
+
+.home-hero-copy h1,
+.home-hero-copy p,
+.about-copy h1,
+.about-copy p,
+.leadership-copy h1,
+.leadership-copy p,
+.hero-text h1,
+.hero-text h2,
+.hero-text p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-buttons,
+.hero-trust {
+  justify-content: center;
+}
 .value-card h3,
 .metric-card strong {
   color: var(--primary-color);
