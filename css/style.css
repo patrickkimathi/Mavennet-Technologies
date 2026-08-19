@@ -4329,6 +4329,7 @@ font-weight: 600;
   color: var(--training-ink);
   font-size: 1.55rem;
   letter-spacing: -0.02em;
+  text-align: center;
 }
 
 .training-page .filter-controls {
