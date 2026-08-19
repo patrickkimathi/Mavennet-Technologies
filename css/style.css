@@ -3243,6 +3243,10 @@ font-weight: 600;
   background: linear-gradient(135deg, #f4f8ff 0%, #e8f1ff 100%);
 }
 
+.excel-course-image img {
+  object-position: left bottom;
+}
+
 .course-badge {
   position: absolute;
   top: 12px;
