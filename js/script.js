@@ -816,28 +816,34 @@ document.addEventListener("DOMContentLoaded", () => {
         title: "Superstore Sales Dashboard: A Power BI Project",
         category: "Data & Analytics",
         date: "2025-10-08",
-        excerpt: "How a Power BI dashboard turns sales data into clearer decisions about profitability, customers, and operations.",
-        content: "This project uses data modeling, DAX, and Power Query to explore sales performance, profitability, customer behavior, and operational efficiency. The dashboard brings KPI cards, category analysis, shipping performance, and customer segments into one decision-ready view."
+        excerpt: "In this project, I built a Superstore Sales Dashboard using Power BI to explore sales performance, profitability, customer behavior, and operational efficiency.",
+        content: "The dashboard transforms the open-source Superstore dataset from Kaggle into actionable business insights, showcasing my skills in data modeling, DAX, and data storytelling.\n\nProject Objective\nThe dashboard analyzes Superstore sales data to uncover trends influencing profitability and customer satisfaction. It includes metrics like total sales, profit margins, shipping mode performance, and order duration distribution.\n\nKey visuals include KPI Cards, Donut Charts, Bar Charts, Combo Charts, and Histograms. Each offers insight into sales patterns, top-performing categories, and customer segments.\n\nTools: Power BI, DAX, Power Query\n\nThis project demonstrates how to transform raw datasets into powerful business intelligence dashboards for better decision-making.\n\nSpecial thanks to Future Interns for providing the learning environment and to Kaggle for making high-quality open datasets accessible."
       },
       {
         id: "web-trends-2025",
         title: "Web Development Trends in 2025",
         category: "Digital Growth",
         date: "2025-02-15",
-        excerpt: "A practical look at the tools and approaches shaping responsive, accessible, and resilient websites.",
-        content: "AI-assisted workflows, low-code tools, serverless architecture, and stronger privacy practices are changing how teams build for the web. The best results still come from combining new tools with clear user needs and disciplined accessibility work."
+        excerpt: "As technology evolves, so do the trends shaping modern web development. In 2025, developers are embracing smarter tools, AI-driven experiences, and highly responsive designs to improve performance and accessibility.",
+        content: "AI-Powered Websites: Personalized content through machine learning algorithms.\n\nLow-Code Platforms: Faster deployment with tools like Webflow and Bubble.\n\nServerless Architecture: More scalable, cost-effective backend solutions.\n\nCybersecurity Focus: Enhanced protocols to protect user data and privacy.\n\nThese trends enable developers to build user-centered, secure, and efficient digital experiences. Staying ahead of these innovations ensures competitive advantage in the fast-paced web industry."
       },
       {
         id: "ui-ux-design",
         title: "Why UI/UX Design Matters",
         category: "Design",
         date: "2025-03-10",
-        excerpt: "Good design makes complex products easier to understand, use, and trust.",
-        content: "UI shapes the visual language of a product while UX shapes the journey through it. Together, research, empathy, prototyping, and testing help teams build interfaces that are useful, accessible, and memorable."
+        excerpt: "UI/UX design plays a crucial role in creating intuitive digital products that meet user needs. A seamless experience can significantly boost engagement and retention rates.",
+        content: "Good UI focuses on the visual appeal, while UX ensures smooth interaction and flow. Together, they enhance satisfaction and encourage brand loyalty.\n\nDesigners today combine empathy, research, and testing to build interfaces that simplify complex processes and delight users.\n\nUltimately, investing in UI/UX is not just about aesthetics; it is about delivering functional, accessible, and impactful experiences."
       }
     ];
 
     let savedBlogPosts = JSON.parse(localStorage.getItem("mavennetBlogPosts") || "[]");
+    let importedBlogPosts = [];
+    let blogUser = JSON.parse(localStorage.getItem("mavennetBlogUser") || "null");
+    let blogComments = JSON.parse(localStorage.getItem("mavennetBlogComments") || "{}") || {};
+    const blogLoginForm = document.getElementById("blogLoginForm");
+    const blogLoginEmail = document.getElementById("blogLoginEmail");
+    const blogAuthStatus = document.getElementById("blogAuthStatus");
     if (!Array.isArray(savedBlogPosts)) {
       savedBlogPosts = [];
     }
@@ -852,14 +858,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderBlogPosts() {
       blogPostsGrid.replaceChildren();
-      [...savedBlogPosts, ...defaultBlogPosts].forEach(post => {
+      [...savedBlogPosts, ...importedBlogPosts, ...defaultBlogPosts].forEach(post => {
         const article = document.createElement("article");
         article.className = "blog-post-card";
         article.dataset.postId = post.id;
 
         const meta = document.createElement("div");
         meta.className = "post-meta";
-        meta.innerHTML = `<span>${post.category}</span><time datetime="${post.date}">${formatBlogDate(post.date)}</time>`;
+        const category = document.createElement("span");
+        category.textContent = post.category;
+        const date = document.createElement("time");
+        date.dateTime = post.date;
+        date.textContent = formatBlogDate(post.date);
+        meta.append(category, date);
 
         const title = document.createElement("h3");
         title.textContent = post.title;
@@ -898,10 +909,72 @@ document.addEventListener("DOMContentLoaded", () => {
           actions.appendChild(deletePost);
         }
 
-        article.append(meta, title, excerpt, content, actions);
+        const comments = document.createElement("section");
+        comments.className = "post-comments";
+        const commentsHeading = document.createElement("strong");
+        commentsHeading.textContent = "Comments";
+        const commentList = document.createElement("ul");
+        commentList.className = "post-comment-list";
+        (blogComments[post.id] || []).forEach(comment => {
+          const item = document.createElement("li");
+          item.textContent = `${comment.email}: ${comment.text}`;
+          commentList.appendChild(item);
+        });
+
+        const commentForm = document.createElement("form");
+        commentForm.className = "post-comment-form";
+        const commentInput = document.createElement("textarea");
+        commentInput.required = true;
+        commentInput.maxLength = 500;
+        commentInput.placeholder = blogUser ? "Write a comment..." : "Sign in with a valid email to comment";
+        commentInput.disabled = !blogUser;
+        const commentSubmit = document.createElement("button");
+        commentSubmit.className = "post-comment-submit";
+        commentSubmit.type = "submit";
+        commentSubmit.textContent = "Post comment";
+        commentSubmit.disabled = !blogUser;
+        commentForm.append(commentInput, commentSubmit);
+        commentForm.addEventListener("submit", event => {
+          event.preventDefault();
+          if (!blogUser || !commentInput.value.trim()) {
+            return;
+          }
+          blogComments[post.id] = blogComments[post.id] || [];
+          blogComments[post.id].push({ email: blogUser.email, text: commentInput.value.trim() });
+          localStorage.setItem("mavennetBlogComments", JSON.stringify(blogComments));
+          renderBlogPosts();
+        });
+        comments.append(commentsHeading, commentList, commentForm);
+
+        article.append(meta, title, excerpt, content, actions, comments);
         blogPostsGrid.appendChild(article);
       });
     }
+
+    function isValidBlogEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    if (blogUser) {
+      blogLoginEmail.value = blogUser.email;
+      blogAuthStatus.textContent = `Signed in as ${blogUser.email}.`;
+      blogAuthStatus.className = "blog-auth-status is-success";
+    }
+
+    blogLoginForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const email = blogLoginEmail.value.trim().toLowerCase();
+      if (!isValidBlogEmail(email)) {
+        blogAuthStatus.textContent = "Enter a valid email address to comment.";
+        blogAuthStatus.className = "blog-auth-status is-error";
+        return;
+      }
+      blogUser = { email };
+      localStorage.setItem("mavennetBlogUser", JSON.stringify(blogUser));
+      blogAuthStatus.textContent = `Signed in as ${email}.`;
+      blogAuthStatus.className = "blog-auth-status is-success";
+      renderBlogPosts();
+    });
 
     blogPostForm.querySelector("#postDate").value = new Date().toISOString().slice(0, 10);
     blogPostForm.addEventListener("submit", (event) => {
@@ -925,6 +998,28 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     renderBlogPosts();
+
+    fetch("/api/facebook-posts", {
+      credentials: "same-origin",
+      headers: { Accept: "application/json" }
+    })
+      .then(response => response.ok ? response.json() : [])
+      .then(posts => {
+        if (Array.isArray(posts)) {
+          importedBlogPosts = posts
+            .filter(post => post && post.title && post.date && post.excerpt && post.content)
+            .map(post => ({
+              id: `facebook-${post.id || post.date}-${post.title}`,
+              title: String(post.title),
+              category: String(post.category || "Facebook"),
+              date: String(post.date).slice(0, 10),
+              excerpt: String(post.excerpt),
+              content: String(post.content)
+            }));
+          renderBlogPosts();
+        }
+      })
+      .catch(() => {});
   }
 });
 

@@ -31,6 +31,7 @@ The project is built using **HTML, CSS, and JavaScript**, and deployed using **G
   - Google Project Management Certificate  
   - Cisco CyberOps  
 - **Contact Page** – Contact form with input validation (JS) for collecting inquiries.  
+- **Blog Page** – Write posts in the browser, save them locally, and display sanitized posts returned by a secure `/api/facebook-posts` endpoint.  
 - **Responsive Navigation Bar** – Dropdown menu for small screens with hamburger toggle.  
 - **Animations & Transitions** – Motion background, smooth hover effects, and fade-in sections.  
 
@@ -83,6 +84,26 @@ portfolio-website/
    cd portfolio
    ```
 2. Open `index.html` in your browser.  
+
+### Secure Facebook Blog Import
+The blog requests Facebook posts silently from `/api/facebook-posts`. The endpoint must run on the hosting platform or backend and use a Facebook Page Access Token stored in a server-side environment variable. Never place the token in HTML, `js/script.js`, or any public frontend configuration.
+
+The endpoint should return a JSON array using this shape:
+
+```json
+[
+  {
+    "id": "facebook-post-id",
+    "title": "Post title",
+    "category": "Facebook",
+    "date": "2026-08-19",
+    "excerpt": "Short post summary.",
+    "content": "Sanitized post content."
+  }
+]
+```
+
+If the endpoint is unavailable, the blog quietly continues showing local and built-in posts.
 
 ### Option 2 – Live Deployment  
 The website is hosted on **GitHub Pages**:  
