@@ -141,7 +141,7 @@ This project is licensed under the **MIT License** – free to use, modify, and 
 👤 **Patrick Kariuki**  
 - 💼 Data Analyst | Web Developer  |UI UX Designer
 
-- 📧 Email: patkimathi148@gmail.com 
+- 📧 Email: mavennetech@gmail.com
 
 - 🌍 Portfolio: https://patrickkimathi.github.io/patrickkimathi.github.io-my-portfolio
 

@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (isValid) {
         const subject = `Contact request from ${name.value.trim()}`;
         const body = `Name: ${name.value.trim()}\nEmail: ${email.value.trim()}\nCompany: ${company.value.trim() || 'N/A'}\n\nMessage:\n${message.value.trim()}`;
-        const mailtoLink = `mailto:patkimathi148@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const mailtoLink = `mailto:mavennetech@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         window.location.href = mailtoLink;
         contactForm.reset();
       }
@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (isValid) {
         const subject = `Training booking request: ${course.value}`;
         const body = `Name: ${name.value.trim()}\nEmail: ${email.value.trim()}\nCourse: ${course.value}\nPreferred Date: ${date.value}\n\nMessage:\n${message.value.trim()}`;
-        const mailtoLink = `mailto:patkimathi148@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        const mailtoLink = `mailto:mavennetech@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         window.location.href = mailtoLink;
         bookingForm.reset();
       }
