@@ -786,14 +786,18 @@ document.addEventListener("DOMContentLoaded", () => {
       
       if (sortValue === "price-low") {
         cardsArray.sort((a, b) => {
-          const priceA = parseInt(a.getAttribute("data-price"));
-          const priceB = parseInt(b.getAttribute("data-price"));
+          const priceA = parseInt(a.getAttribute("data-price"), 10);
+          const priceB = parseInt(b.getAttribute("data-price"), 10);
+          if (Number.isNaN(priceA)) return 1;
+          if (Number.isNaN(priceB)) return -1;
           return priceA - priceB;
         });
       } else if (sortValue === "price-high") {
         cardsArray.sort((a, b) => {
-          const priceA = parseInt(a.getAttribute("data-price"));
-          const priceB = parseInt(b.getAttribute("data-price"));
+          const priceA = parseInt(a.getAttribute("data-price"), 10);
+          const priceB = parseInt(b.getAttribute("data-price"), 10);
+          if (Number.isNaN(priceA)) return 1;
+          if (Number.isNaN(priceB)) return -1;
           return priceB - priceA;
         });
       }
