@@ -616,7 +616,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateCartSummary() {
     const subtotal = shoppingCart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const tax = Math.round(subtotal * 0.1);
+    const tax = Math.round(subtotal * 0.015);
     const total = subtotal + tax;
     
     subtotalElement.textContent = formatCurrency(subtotal);
