@@ -17,6 +17,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  document.querySelectorAll(".services-menu > button").forEach(button => {
+    button.addEventListener("click", () => {
+      const servicesMenu = button.closest(".services-menu");
+      const isOpen = servicesMenu.classList.toggle("open");
+      button.setAttribute("aria-expanded", String(isOpen));
+    });
+  });
+
+  const today = new Date();
+  const todayValue = [today.getFullYear(), String(today.getMonth() + 1).padStart(2, "0"), String(today.getDate()).padStart(2, "0")].join("-");
+  document.querySelectorAll('input[type="date"]').forEach(dateInput => {
+    dateInput.min = todayValue;
+  });
+
   // ===============================
   // 1️⃣.5️⃣ HERO CAROUSEL - SLIDING BACKGROUND IMAGES
   // ===============================
@@ -121,6 +135,30 @@ document.addEventListener("DOMContentLoaded", () => {
     revealOnScroll();
   }
 
+  const revealElements = document.querySelectorAll("[data-reveal]");
+  if (revealElements.length) {
+    function revealVisibleElements() {
+      revealElements.forEach(element => {
+        if (element.getBoundingClientRect().top < window.innerHeight * 0.9) {
+          element.classList.add("is-visible");
+        }
+      });
+    }
+
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.16 });
+
+    revealElements.forEach(element => revealObserver.observe(element));
+    window.addEventListener("scroll", revealVisibleElements, { passive: true });
+    revealVisibleElements();
+  }
+
   // ===============================
   // 5️⃣ CONTACT FORM VALIDATION
   // ===============================
@@ -197,6 +235,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!date.value) {
         alert("⚠️ Please select a preferred date.");
         isValid = false;
+      } else if (date.value < todayValue) {
+        alert("⚠️ Please select today or a future date.");
+        isValid = false;
       }
 
       if (message.value.trim().length < 10) {
@@ -212,6 +253,129 @@ document.addEventListener("DOMContentLoaded", () => {
         bookingForm.reset();
       }
     });
+  }
+
+  const reviewForm = document.getElementById("reviewForm");
+  const approvedReviews = document.getElementById("approvedReviews");
+  const pendingReviews = document.getElementById("pendingReviews");
+  const reviewFormStatus = document.getElementById("reviewFormStatus");
+
+  if (reviewForm && approvedReviews && pendingReviews) {
+    const pendingReviewKey = "mavennetPendingReviews";
+    const approvedReviewKey = "mavennetApprovedReviews";
+    let pendingReviewList = JSON.parse(localStorage.getItem(pendingReviewKey) || "[]");
+    let approvedReviewList = JSON.parse(localStorage.getItem(approvedReviewKey) || "[]");
+
+    if (!Array.isArray(pendingReviewList)) pendingReviewList = [];
+    if (!Array.isArray(approvedReviewList)) approvedReviewList = [];
+
+    function reviewStars(rating) {
+      return "★".repeat(rating) + "☆".repeat(5 - rating);
+    }
+
+    function renderApprovedReviews() {
+      approvedReviews.replaceChildren();
+      if (!approvedReviewList.length) {
+        const emptyMessage = document.createElement("p");
+        emptyMessage.className = "review-empty";
+        emptyMessage.textContent = "No verified reviews yet. Be the first to share your experience.";
+        approvedReviews.appendChild(emptyMessage);
+        return;
+      }
+
+      approvedReviewList.forEach(review => {
+        const item = document.createElement("article");
+        item.className = "review-item";
+        const meta = document.createElement("div");
+        meta.className = "review-meta";
+        const author = document.createElement("strong");
+        author.textContent = `${review.name} - ${review.service}`;
+        const stars = document.createElement("span");
+        stars.className = "review-stars";
+        stars.textContent = reviewStars(review.rating);
+        stars.setAttribute("aria-label", `${review.rating} out of 5 stars`);
+        meta.append(author, stars);
+        const comment = document.createElement("p");
+        comment.textContent = review.comment;
+        item.append(meta, comment);
+        approvedReviews.appendChild(item);
+      });
+    }
+
+    function renderPendingReviews() {
+      pendingReviews.replaceChildren();
+      if (!pendingReviewList.length) {
+        const emptyMessage = document.createElement("p");
+        emptyMessage.className = "review-empty";
+        emptyMessage.textContent = "There are no reviews waiting for verification.";
+        pendingReviews.appendChild(emptyMessage);
+        return;
+      }
+
+      pendingReviewList.forEach(review => {
+        const item = document.createElement("article");
+        item.className = "pending-review";
+        const meta = document.createElement("div");
+        meta.className = "review-meta";
+        const author = document.createElement("strong");
+        author.textContent = `${review.name} - ${review.service}`;
+        const stars = document.createElement("span");
+        stars.className = "review-stars";
+        stars.textContent = reviewStars(review.rating);
+        meta.append(author, stars);
+        const comment = document.createElement("p");
+        comment.textContent = review.comment;
+        const actions = document.createElement("div");
+        actions.className = "pending-review-actions";
+        const approveButton = document.createElement("button");
+        approveButton.type = "button";
+        approveButton.textContent = "Approve";
+        approveButton.addEventListener("click", () => {
+          approvedReviewList.unshift(review);
+          pendingReviewList = pendingReviewList.filter(itemReview => itemReview.id !== review.id);
+          saveReviews();
+        });
+        const rejectButton = document.createElement("button");
+        rejectButton.type = "button";
+        rejectButton.textContent = "Reject";
+        rejectButton.addEventListener("click", () => {
+          pendingReviewList = pendingReviewList.filter(itemReview => itemReview.id !== review.id);
+          saveReviews();
+        });
+        actions.append(approveButton, rejectButton);
+        item.append(meta, comment, actions);
+        pendingReviews.appendChild(item);
+      });
+    }
+
+    function saveReviews() {
+      localStorage.setItem(pendingReviewKey, JSON.stringify(pendingReviewList));
+      localStorage.setItem(approvedReviewKey, JSON.stringify(approvedReviewList));
+      renderApprovedReviews();
+      renderPendingReviews();
+    }
+
+    reviewForm.addEventListener("submit", event => {
+      event.preventDefault();
+      if (!reviewForm.checkValidity()) {
+        reviewForm.reportValidity();
+        return;
+      }
+      const formData = new FormData(reviewForm);
+      pendingReviewList.unshift({
+        id: `review-${Date.now()}`,
+        name: formData.get("name").trim(),
+        service: formData.get("service"),
+        rating: Number(formData.get("rating")),
+        comment: formData.get("comment").trim()
+      });
+      saveReviews();
+      reviewForm.reset();
+      reviewFormStatus.textContent = "Thank you. Your review is waiting for verification.";
+    });
+
+    renderApprovedReviews();
+    renderPendingReviews();
   }
 
   // ===============================
@@ -762,19 +926,52 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchInput = document.getElementById("searchCourses");
   const sortSelect = document.getElementById("sortCourses");
   const courseCards = document.querySelectorAll(".course-card");
+  const courseSearchMessage = document.getElementById("courseSearchMessage");
 
   if (searchInput) {
     searchInput.addEventListener("input", () => {
-      const searchTerm = searchInput.value.toLowerCase();
-      
-      courseCards.forEach(card => {
-        const courseName = card.querySelector("h3").textContent.toLowerCase();
-        if (courseName.includes(searchTerm)) {
-          card.style.display = "";
-        } else {
-          card.style.display = "none";
-        }
+      const searchTerm = searchInput.value.trim().toLowerCase();
+      const searchWords = searchTerm.split(/\s+/).filter(word => word.length > 1);
+      const scoredCards = Array.from(courseCards).map((card, index) => {
+        const searchableText = card.textContent.toLowerCase();
+        const score = searchWords.reduce((total, word) => {
+          return total + (searchableText.includes(word) ? 1 : 0);
+        }, 0);
+
+        return { card, index, score };
       });
+
+      if (!searchTerm) {
+        scoredCards.forEach(({ card }) => {
+          card.style.display = "";
+        });
+        if (courseSearchMessage) {
+          courseSearchMessage.style.display = "none";
+          courseSearchMessage.textContent = "";
+        }
+        return;
+      }
+
+      const matchingCards = scoredCards
+        .filter(({ score }) => score > 0)
+        .sort((a, b) => b.score - a.score || a.index - b.index);
+      const cardsToShow = matchingCards.length > 0
+        ? matchingCards
+        : scoredCards.filter(({ card }) => card.classList.contains("course-card-request") === false).slice(0, 3);
+
+      scoredCards.forEach(({ card }) => {
+        card.style.display = cardsToShow.some(result => result.card === card) ? "" : "none";
+      });
+
+      if (courseSearchMessage) {
+        const hasExactMatch = matchingCards.some(({ card }) =>
+          card.querySelector("h3").textContent.toLowerCase().includes(searchTerm)
+        );
+        courseSearchMessage.style.display = hasExactMatch ? "none" : "block";
+        courseSearchMessage.textContent = hasExactMatch
+          ? ""
+          : `Sorry, we currently do not offer \"${searchInput.value.trim()}\", but we have something amazing for you:`;
+      }
     });
   }
 
@@ -980,10 +1177,16 @@ document.addEventListener("DOMContentLoaded", () => {
       renderBlogPosts();
     });
 
-    blogPostForm.querySelector("#postDate").value = new Date().toISOString().slice(0, 10);
+    blogPostForm.querySelector("#postDate").value = todayValue;
     blogPostForm.addEventListener("submit", (event) => {
       event.preventDefault();
       const formData = new FormData(blogPostForm);
+      if (formData.get("date") < todayValue) {
+        blogPostForm.querySelector("#postDate").setCustomValidity("Please choose today or a future date.");
+        blogPostForm.querySelector("#postDate").reportValidity();
+        return;
+      }
+      blogPostForm.querySelector("#postDate").setCustomValidity("");
       const newPost = {
         id: `local-${Date.now()}`,
         title: formData.get("title").trim(),
@@ -996,7 +1199,7 @@ document.addEventListener("DOMContentLoaded", () => {
       savedBlogPosts.unshift(newPost);
       localStorage.setItem("mavennetBlogPosts", JSON.stringify(savedBlogPosts));
       blogPostForm.reset();
-      blogPostForm.querySelector("#postDate").value = new Date().toISOString().slice(0, 10);
+      blogPostForm.querySelector("#postDate").value = todayValue;
       renderBlogPosts();
       blogPostsGrid.scrollIntoView({ behavior: "smooth", block: "start" });
     });

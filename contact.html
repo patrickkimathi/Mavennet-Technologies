@@ -19,14 +19,9 @@
   <span>Mavennet Technologies</span>
 </a>
 <ul class="nav-links">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <!--<li><a href="projects.html">Data Projects</a></li>-->
-          <li><a href="training-services.html">Digital Skills Training</a></li>
-          <li><a href="graphics.html">Graphics Design</a></li>
-          <li><a href="e-citizen-services.html">E-Citizen Services</a></li>
-          <li><a href="contact.html" class="active">Contact</a></li>
-          <li><a href="blog.html">Blog</a></li>
+          <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="training-services.html">Training</a></li>
+          <li class="services-menu"><button type="button" aria-expanded="false">Services <span aria-hidden="true">▾</span></button><ul class="services-dropdown"><li><a href="graphics.html">Graphics Design</a></li><li><a href="e-citizen-services.html">E-Citizen Services</a></li></ul></li>
+          <li><a href="contact.html" class="active">Contact</a></li><li><a href="blog.html">Blog</a></li>
 </ul>
 <div class="menu-toggle">&#9776;</div>
 </nav>
@@ -45,16 +40,16 @@
     <div class="contact-panel card">
       <h3>Contact Us</h3>
       <form id="contactForm" class="contact-form">
-        <label for="name">Full Name</label>
+        <label class="required" for="name">Full Name</label>
         <input id="name" type="text" placeholder="Your Name" required />
 
-        <label for="email">Email Address</label>
+        <label class="required" for="email">Email Address</label>
         <input id="email" type="email" placeholder="you@company.com" required />
 
         <label for="company">Company</label>
         <input id="company" type="text" placeholder="Company name" />
 
-        <label for="message">How can we help?</label>
+        <label class="required" for="message">How can we help?</label>
         <textarea id="message" placeholder="Describe your project or question" rows="6" required></textarea>
 
         <button type="submit" class="btn">Send Request</button>
@@ -65,10 +60,6 @@
   <section class="contact-details">
     <div class="contact-cards">
       <div class="contact-card">
-        <h4><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Office</h4>
-        <p>Nairobi, Kenya</p>
-      </div>
-      <div class="contact-card">
         <h4><i class="fa-solid fa-envelope" aria-hidden="true"></i> Email</h4>
         <p><a href="mailto:mavennetech@gmail.com">mavennetech@gmail.com</a></p>
       </div>
@@ -76,6 +67,7 @@
         <h4><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp</h4>
         <p><a href="https://wa.me/254797666890" target="_blank" rel="noopener">+254 797 666 890</a></p>
       </div>
+    
       <div class="contact-card">
         <h4><i class="fa-solid fa-phone" aria-hidden="true"></i> Phone</h4>
         <p><a href="tel:+254797666890">+254 797 666 890</a></p>
@@ -87,6 +79,7 @@
 
 <!-- ===== Footer ===== -->
 <footer>
+  <p class="footer-section-label">Connect With Us</p>
   <nav class="footer-social" aria-label="Social media links">
       <a class="social-facebook" href="https://www.facebook.com/profile.php?id=100037748263947" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i><span>Facebook</span></a>
       <a class="social-linkedin" href="https://www.linkedin.com/in/patkariuki/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i><span>LinkedIn</span></a>

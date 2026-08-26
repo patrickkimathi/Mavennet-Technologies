@@ -19,14 +19,9 @@
         <span>Mavennet Technologies</span>
       </a>
       <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-       <!--  <li><a href="projects.html">Data Projects</a></li>-->
-        <li><a href="training-services.html" class="active">Digital Skills Training</a></li>
-        <li><a href="graphics.html">Graphics Design</a></li>
-        <li><a href="e-citizen-services.html">E-Citizen Services</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="blog.html">Blog</a></li>
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="training-services.html" class="active">Training</a></li>
+        <li class="services-menu"><button type="button" aria-expanded="false">Services <span aria-hidden="true">▾</span></button><ul class="services-dropdown"><li><a href="graphics.html">Graphics Design</a></li><li><a href="e-citizen-services.html">E-Citizen Services</a></li></ul></li>
+        <li><a href="contact.html">Contact</a></li><li><a href="blog.html">Blog</a></li>
       </ul>
       <div class="menu-toggle">&#9776;</div>
     </nav>
@@ -76,6 +71,7 @@
     <!-- ===== Course Cards Grid ===== -->
     <section class="ecommerce-courses">
       <div class="courses-container">
+        <p class="course-search-message" id="courseSearchMessage" role="status" aria-live="polite"></p>
         <!-- Course Card 1 -->
         <div class="course-card" data-price="5000">
           <div class="course-image-wrapper">
@@ -521,6 +517,35 @@
         </div>
 
         <!-- Course Card 16 -->
+        <div class="course-card" data-price="2000">
+          <div class="course-image-wrapper">
+            <div class="course-badge">New</div>
+            <div class="course-image" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=900&q=80" alt="Cybersecurity awareness training" loading="lazy" />
+            </div>
+          </div>
+          <div class="course-details">
+            <h3>Cybersecurity Awareness</h3>
+            <p class="course-subtitle">Stay Safe Online at Work and Home</p>
+            <div class="course-features">
+              <span class="feature">✓ 5 Modules</span>
+              <span class="feature">✓ 10+ Hours</span>
+              <span class="feature">✓ Certificate</span>
+              <span class="feature">✓ Lifetime Access</span>
+            </div>
+            <p class="course-description">Build practical cybersecurity awareness by learning how to spot phishing, protect accounts, handle data safely, and respond to common online threats.</p>
+            <div class="course-footer">
+              <div class="price-section">
+                <span class="price">KES 2,000</span>
+              </div>
+              <button class="btn-add-cart" data-course="Cybersecurity Awareness" data-price="2000">
+                <span>Enroll</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Course Card 17 -->
         <div class="course-card course-card-request" data-price="6000">
           <div class="course-image-wrapper">
             <div class="course-badge">Kids</div>
@@ -549,7 +574,7 @@
           </div>
         </div>
 
-        <!-- Course Card 17 -->
+        <!-- Course Card 18 -->
         <div class="course-card course-card-request" data-price="7000">
           <div class="course-image-wrapper">
             <div class="course-badge popular">Adults</div>
@@ -621,26 +646,36 @@
           <div class="form-section">
             <h3>Billing Information</h3>
             <div class="form-row">
-              <input type="text" placeholder="Full Name" required>
-              <input type="email" placeholder="Email Address" required>
+              <label class="sr-only required" for="checkoutName">Full Name</label>
+              <input id="checkoutName" type="text" placeholder="Full Name" required>
+              <label class="sr-only required" for="checkoutEmail">Email Address</label>
+              <input id="checkoutEmail" type="email" placeholder="Email Address" required>
             </div>
             <div class="form-row">
-              <input type="text" placeholder="Address" required>
-              <input type="text" placeholder="City" required>
+              <label class="sr-only required" for="checkoutAddress">Address</label>
+              <input id="checkoutAddress" type="text" placeholder="Address" required>
+              <label class="sr-only required" for="checkoutCity">City</label>
+              <input id="checkoutCity" type="text" placeholder="City" required>
             </div>
             <div class="form-row">
-              <input type="text" placeholder="State/Province" required>
-              <input type="text" placeholder="Postal Code" required>
+              <label class="sr-only required" for="checkoutState">State or Province</label>
+              <input id="checkoutState" type="text" placeholder="State/Province" required>
+              <label class="sr-only required" for="checkoutPostalCode">Postal Code</label>
+              <input id="checkoutPostalCode" type="text" placeholder="Postal Code" required>
             </div>
-            <input type="text" placeholder="Country" required style="width: 100%;">
+            <label class="sr-only required" for="checkoutCountry">Country</label>
+            <input id="checkoutCountry" type="text" placeholder="Country" required style="width: 100%;">
           </div>
 
           <div class="form-section">
             <h3>Payment Information</h3>
-            <input type="text" placeholder="Card Number" required style="width: 100%;">
+            <label class="sr-only required" for="checkoutCardNumber">Card Number</label>
+            <input id="checkoutCardNumber" type="text" placeholder="Card Number" required style="width: 100%;">
             <div class="form-row">
-              <input type="text" placeholder="MM/YY" required>
-              <input type="text" placeholder="CVV" required>
+              <label class="sr-only required" for="checkoutExpiry">Card expiry date</label>
+              <input id="checkoutExpiry" type="text" placeholder="MM/YY" required>
+              <label class="sr-only required" for="checkoutCvv">CVV</label>
+              <input id="checkoutCvv" type="text" placeholder="CVV" required>
             </div>
           </div>
 
@@ -1567,17 +1602,17 @@
         <h3>Reserve a Training Slot</h3>
         <div class="form-row">
           <div>
-            <label for="name">Full Name</label>
+            <label class="required" for="name">Full Name</label>
             <input id="name" type="text" placeholder="Your Name" required />
           </div>
           <div>
-            <label for="email">Email Address</label>
+            <label class="required" for="email">Email Address</label>
             <input id="email" type="email" placeholder="you@example.com" required />
           </div>
         </div>
         <div class="form-row">
           <div>
-            <label for="course">Course of Interest</label>
+            <label class="required" for="course">Course of Interest</label>
             <select id="course" required>
               <option value="">Select a course</option>
               <option>Excel Data Analysis</option>
@@ -1589,14 +1624,15 @@
               <option>Data Literacy Training</option>
               <option>Digital Marketing</option>
               <option>Social Media Analytics</option>
+              <option>Cybersecurity Awareness</option>
             </select>
           </div>
           <div>
-            <label for="date">Preferred Date</label>
+            <label class="required" for="date">Preferred Date</label>
             <input id="date" type="date" required />
           </div>
         </div>
-        <label for="message">Tell Me More</label>
+        <label class="required" for="message">Tell Me More</label>
         <textarea id="message" placeholder="What are your goals or the challenge you want to solve?" rows="5" required></textarea>
         <button type="submit" class="btn">Submit Booking Request</button>
       </form>
@@ -1607,6 +1643,7 @@
   </main>
 
   <footer>
+    <p class="footer-section-label">Connect With Us</p>
     <nav class="footer-social" aria-label="Social media links">
       <a class="social-facebook" href="https://www.facebook.com/profile.php?id=100037748263947" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i><span>Facebook</span></a>
       <a class="social-linkedin" href="https://www.linkedin.com/in/patkariuki/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i><span>LinkedIn</span></a>

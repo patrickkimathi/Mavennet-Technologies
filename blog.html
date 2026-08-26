@@ -19,14 +19,10 @@
         <span>Mavennet Technologies</span>
       </a>
       <ul class="nav-links">
-        <li><a href="about.html">About</a></li>
-     <!--<li><a href="projects.html">Data Projects</a></li>-->
-        <li><a href="training-services.html">Training</a></li>
-        <li><a href="graphics.html">Graphics Design</a></li>
-        <li><a href="e-citizen-services.html">E-Citizen Services</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="blog.html">Blog</a></li>
-      </ul>
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="training-services.html">Training</a></li>
+        <li class="services-menu"><button type="button" aria-expanded="false">Services <span aria-hidden="true">▾</span></button><ul class="services-dropdown"><li><a href="graphics.html">Graphics Design</a></li><li><a href="e-citizen-services.html">E-Citizen Services</a></li></ul></li>
+        <li><a href="contact.html">Contact</a></li><li><a href="blog.html" class="active">Blog</a></li>
+      </ul><div class="menu-toggle" aria-label="Open navigation menu">&#9776;</div>
     </nav>
   </header>
 
@@ -59,7 +55,7 @@
           </div>
         </div>
         <form id="blogLoginForm" class="blog-login-form">
-          <label class="sr-only" for="blogLoginEmail">Email address</label>
+          <label class="sr-only required" for="blogLoginEmail">Email address</label>
           <input id="blogLoginEmail" type="email" placeholder="you@example.com" autocomplete="email" required />
           <button class="btn btn-primary" type="submit">Sign in</button>
         </form>
@@ -76,7 +72,7 @@
             </div>
           </div>
           <form id="blogPostForm" class="blog-post-form">
-            <label for="postTitle">Title</label>
+            <label class="required" for="postTitle">Title</label>
             <input id="postTitle" name="title" type="text" placeholder="Post title" required maxlength="120" />
             <div class="blog-form-row">
               <div>
@@ -89,13 +85,13 @@
                 </select>
               </div>
               <div>
-                <label for="postDate">Date</label>
+                <label class="required" for="postDate">Date</label>
                 <input id="postDate" name="date" type="date" required />
               </div>
             </div>
-            <label for="postExcerpt">Short introduction</label>
+            <label class="required" for="postExcerpt">Short introduction</label>
             <textarea id="postExcerpt" name="excerpt" rows="3" placeholder="What is this post about?" required maxlength="280"></textarea>
-            <label for="postContent">Post content</label>
+            <label class="required" for="postContent">Post content</label>
             <textarea id="postContent" name="content" rows="7" placeholder="Write your full post here..." required></textarea>
             <button class="btn btn-primary" type="submit"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Publish post</button>
           </form>
@@ -109,6 +105,7 @@
 
   <!-- ===== Footer ===== -->
   <footer>
+    <p class="footer-section-label">Connect With Us</p>
     <nav class="footer-social" aria-label="Social media links">
       <a class="social-facebook" href="https://www.facebook.com/profile.php?id=100037748263947" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i><span>Facebook</span></a>
       <a class="social-linkedin" href="https://www.linkedin.com/in/patkariuki/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i><span>LinkedIn</span></a>

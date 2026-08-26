@@ -19,20 +19,16 @@
         <span>Mavennet Technologies</span>
       </a>
       <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <!-- <li><a href="projects.html">Data Projects</a></li> -->
-        <li><a href="training-services.html">Digital Skills Training</a></li>
-        <li><a href="graphics.html">Graphics Design</a></li>
-        <li><a href="e-citizen-services.html">E-Citizen Services</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="blog.html">Blog</a></li>
+        <li><a href="index.html">Home</a></li><li><a href="about.html" class="active">About</a></li><li><a href="training-services.html">Training</a></li>
+        <li class="services-menu"><button type="button" aria-expanded="false">Services <span aria-hidden="true">▾</span></button><ul class="services-dropdown"><li><a href="graphics.html">Graphics Design</a></li><li><a href="e-citizen-services.html">E-Citizen Services</a></li></ul></li>
+        <li><a href="contact.html">Contact</a></li><li><a href="blog.html">Blog</a></li>
       </ul>
       <div class="menu-toggle">&#9776;</div>
     </nav>
   </header>
 
   <main class="about-page">
-    <section class="about-hero">
+    <section class="about-hero about-hero-animated">
       <div class="about-copy">
         <span class="eyebrow">About Mavennet</span>
         <h1>Helping Organizations & Businesses make better decisions and build stronger digital futures.</h1>
@@ -41,8 +37,8 @@
           and institutions to create practical solutions that blend data, design, strategy, and skills development into measurable growth.
         </p>
         <div class="hero-buttons">
-          <a href="training-services.html" class="btn btn-primary">Explore Our Courses</a>
-          <a href="contact.html" class="btn btn-secondary">Book a Consultation</a>
+          <a href="contact.html" class="btn btn-primary about-consultation-btn">Book a Consultation</a>
+          <a href="training-services.html" class="btn btn-secondary">Explore Our Courses</a>
         </div>
       </div>
 
@@ -69,7 +65,7 @@
       </div>
     </section>
 
-    <section class="about-metrics">
+    <section class="about-metrics" data-reveal>
       <div class="metric-card">
         <strong>200+</strong>
         <span>Clients served</span>
@@ -96,13 +92,13 @@
       </div>
     </section>
 
-    <section class="about-values">
+    <section class="about-values" data-reveal>
       <div class="section-heading">
         <span class="eyebrow">What drives us</span>
         <h2>Built on clarity, integrity, and measurable impact.</h2>
       </div>
 
-      <div class="values-section">
+      <div class="values-section stagger-grid">
         <div class="value-card">
           <h3>Mission</h3>
           <p>To empower businesses to become more confident, agile, and competitive through practical data analytics and digital solutions.</p>
@@ -123,13 +119,13 @@
       </div>
     </section>
 
-    <section class="about-solutions">
+    <section class="about-solutions" data-reveal>
       <div class="section-heading">
         <span class="eyebrow">What we do</span>
         <h2>Solutions designed for business clarity and sustainable growth.</h2>
       </div>
 
-      <div class="service-grid">
+      <div class="service-grid stagger-grid">
         <article class="service-card">
           <div class="icon-box blue">01</div>
           <h3>Analytics & BI</h3>
@@ -150,13 +146,13 @@
       </div>
     </section>
 
-    <section class="process-section">
+    <section class="process-section" data-reveal>
       <div class="section-heading">
         <span class="eyebrow">How we work</span>
         <h2>A structured process that keeps teams aligned and effective.</h2>
       </div>
 
-      <div class="process-grid">
+      <div class="process-grid stagger-grid">
         <div class="process-step">
           <span>01</span>
           <h3>Listen</h3>
@@ -180,7 +176,7 @@
       </div>
     </section>
 
-    <section class="cta-banner">
+    <section class="cta-banner" data-reveal>
       <div>
         <span class="eyebrow light">Let’s talk</span>
         <h2>Ready to build a smarter digital foundation?</h2>
@@ -191,6 +187,7 @@
 
   <!-- ===== Footer ===== -->
   <footer>
+    <p class="footer-section-label">Connect With Us</p>
     <nav class="footer-social" aria-label="Social media links">
       <a class="social-facebook" href="https://www.facebook.com/profile.php?id=100037748263947" target="_blank" rel="noopener"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i><span>Facebook</span></a>
       <a class="social-linkedin" href="https://www.linkedin.com/in/patkariuki/" target="_blank" rel="noopener"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i><span>LinkedIn</span></a>
