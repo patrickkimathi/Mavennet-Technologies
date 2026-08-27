@@ -114,7 +114,8 @@ header {
 .services-menu > button {
   padding: 0;
   border: 0;
-  background: transparent;
+  background: white;
+  border-radius: 8px;
   color: var(--text-color);
   font: inherit;
   font-size: 0.95rem;
@@ -137,7 +138,7 @@ header {
   padding: 0.55rem;
   transform: translateX(-50%);
   border: 1px solid var(--card-border);
-  background: #ffffff;
+  background: #0325e7;
   box-shadow: 0 12px 24px rgba(15, 23, 42, 0.14);
 }
 
