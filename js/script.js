@@ -706,6 +706,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const checkoutForm = document.getElementById("checkoutForm");
   const orderSummaryElement = document.getElementById("orderSummary");
   const checkoutTotalElement = document.getElementById("checkoutTotal");
+  const paymentMethodInputs = document.querySelectorAll('input[name="paymentMethod"]');
+  const cardPaymentFields = document.getElementById("cardPaymentFields");
+  const cardPaymentInputs = cardPaymentFields ? cardPaymentFields.querySelectorAll("input") : [];
+
+  function updatePaymentMethod() {
+    const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value;
+    const isCardPayment = selectedMethod === "card";
+
+    if (cardPaymentFields) {
+      cardPaymentFields.hidden = !isCardPayment;
+    }
+
+    cardPaymentInputs.forEach(input => {
+      input.disabled = !isCardPayment;
+    });
+  }
+
+  paymentMethodInputs.forEach(input => {
+    input.addEventListener("change", updatePaymentMethod);
+  });
+  updatePaymentMethod();
 
   // Add to Cart Button Handlers
   cartButtons.forEach(button => {
@@ -875,11 +896,11 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     
     // Validate form
-    const inputs = checkoutForm.querySelectorAll("input");
+    const inputs = checkoutForm.querySelectorAll("input:not(:disabled)");
     let isValid = true;
     
     inputs.forEach(input => {
-      if (!input.value.trim()) {
+      if (input.type !== "radio" && !input.value.trim()) {
         isValid = false;
         input.style.borderColor = "#e74c3c";
       } else {
@@ -894,14 +915,17 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Get form data
     const formData = new FormData(checkoutForm);
+    const paymentMethod = checkoutForm.querySelector('input[name="paymentMethod"]:checked')?.value;
+    const paymentLabel = paymentMethod === "mpesa" ? "M-Pesa" : "Card";
     const orderData = {
       courses: shoppingCart,
       customerInfo: {
-        name: inputs[0].value,
-        email: inputs[1].value,
-        address: inputs[2].value,
-        city: inputs[3].value
+        name: document.getElementById("checkoutName").value,
+        email: document.getElementById("checkoutEmail").value,
+        address: document.getElementById("checkoutAddress").value,
+        city: document.getElementById("checkoutCity").value
       },
+      paymentMethod,
       timestamp: new Date().toLocaleString()
     };
     
@@ -909,7 +933,10 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("lastOrder", JSON.stringify(orderData));
     
     // Show success message
-    alert(`✓ Order placed successfully!\\n\\nThank you for your purchase. Your courses have been added to your account. Check your email at ${inputs[1].value} for login credentials and course access links.\\n\\nOrder ID: ${Date.now()}`);
+    const paymentMessage = paymentMethod === "mpesa"
+      ? "Please send your M-Pesa payment to +254 797 666 890."
+      : "Your card payment option has been recorded for processing.";
+    alert(`✓ Order placed successfully!\\n\\nPayment method: ${paymentLabel}\\n${paymentMessage}\\n\\nThank you for your purchase. Your courses have been added to your account. Check your email at ${document.getElementById("checkoutEmail").value} for login credentials and course access links.\\n\\nOrder ID: ${Date.now()}`);
     
     // Reset and close
     shoppingCart = [];

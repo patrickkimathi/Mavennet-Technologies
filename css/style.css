@@ -3597,6 +3597,10 @@ font-weight: 600;
   font-size: 0.9rem;
   color: var(--muted-text);
   text-decoration: line-through;
+  opacity: 0.55;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .btn-add-cart {
@@ -3941,6 +3945,81 @@ font-weight: 600;
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(0, 86, 214, 0.1);
+}
+
+.payment-methods {
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 0;
+}
+
+.payment-methods legend {
+  padding: 0 0.4rem;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.checkout-form .payment-option input[type="radio"] {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.mpesa-payment-card {
+  margin: 0.8rem 0 1rem 1.5rem;
+  padding: 1rem;
+  border: 1px solid #8bd8ae;
+  border-left: 5px solid #00a651;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #effcf4 0%, #dcf7e8 100%);
+}
+
+.mpesa-brand {
+  display: inline-block;
+  padding: 0.25rem 0.55rem;
+  border-radius: 4px;
+  background: #00a651;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.mpesa-details {
+  margin: 0.7rem 0 0.2rem;
+  color: #166534;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.mpesa-number {
+  display: inline-block;
+  color: #087f3f;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+}
+
+.mpesa-number:hover,
+.mpesa-number:focus-visible {
+  color: #055c2e;
+  text-decoration: underline;
+}
+
+.card-payment-fields[hidden] {
+  display: none;
 }
 
 .order-review {
