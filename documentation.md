@@ -2,8 +2,8 @@
 # 📘 Project Documentation: Personal Portfolio Website  
 
 ## 1. Overview  
-This is a **personal portfolio website** designed and developed by and for  **Patrick Kariuki**, a **Data Analyst and Web Developer**.  
-The portfolio serves as a digital resume, showcasing professional skills, certifications, projects, and achievements in a visually appealing and responsive manner.  
+This is a responsive website for **Mavennet Technologies**, focused on digital skills training and services.  
+The home page introduces the organization, its data and digital-skills learning pathways, and its service offerings.  
 
 The project is built using **HTML, CSS, and JavaScript**, and deployed using **GitHub Pages** for free hosting.  
 
@@ -11,7 +11,7 @@ The project is built using **HTML, CSS, and JavaScript**, and deployed using **G
 
 ## 2. Objectives  
 - ✅ Create an **online presence** for professional branding.  
-- ✅ Provide a **central hub** to showcase projects, skills, and certifications.  
+- ✅ Provide a **central hub** for data analytics training and digital services.  
 - ✅ Ensure the site is **responsive**, accessible across desktop, tablet, and mobile devices.  
 - ✅ Implement **modern design principles** with animations and transitions.  
 - ✅ Enable potential employers, clients, and collaborators to **connect easily** via a contact form.  
@@ -19,19 +19,11 @@ The project is built using **HTML, CSS, and JavaScript**, and deployed using **G
 ---
 
 ## 3. Features  
-- **Home Page** – Hero section with animated background, introduction, and highlights.  
-- **About Page** – Personal story, career journey, and professional summary.  
-- **Projects Page** – Portfolio of completed and ongoing projects with descriptions.  
-- **Skills Page** – Technical and analytical skills presented in **card-based design**.  
-- **Certifications Page** – Display of completed certifications such as:  
-  - OCI Gen AI  
-  - Google Data Analytics Professional Certificate  
-  - Google Cybersecurity Professional Certificate  
-  - Google Business Intelligence Professional Certificate  
-  - Google Project Management Certificate  
-  - Cisco CyberOps  
-- **Contact Page** – Contact form with input validation (JS) for collecting inquiries.  
-- **Blog Page** – Write posts in the browser, save them locally, and display sanitized posts returned by a secure `/api/facebook-posts` endpoint.  
+- **Home Page** – Overview of Mavennet Technologies and its learning pathways.  
+- **Digital Academy** – Searchable and sortable courses in analytics and emerging digital skills.  
+- **Services Page** – Information about e-Citizen and digital support services.  
+- **Contact Page** – Contact form with input validation (JavaScript).  
+- **Legacy About URL** – Redirects to the integrated About section on Home.  
 - **Responsive Navigation Bar** – Dropdown menu for small screens with hamburger toggle.  
 - **Animations & Transitions** – Motion background, smooth hover effects, and fade-in sections.  
 
@@ -54,12 +46,14 @@ The project is built using **HTML, CSS, and JavaScript**, and deployed using **G
 ```bash
 portfolio-website/
 │
-├── index.html            # Home Page
-├── about.html            # About Me
-├── projects.html         # Projects
-├── skills.html           # Skills
-├── certifications.html   # Certifications & Courses
-├── contact.html          # Contact Page
+├── index.html            # Home and integrated About section
+├── about.html            # Legacy redirect to Home
+├── training-services.html # Digital Academy
+├── e-citizen-services.html # Services
+├── contact.html          # Contact page
+├── 404.html              # Not-found page
+├── robots.txt            # Crawler policy and sitemap location
+├── sitemap.xml           # Canonical indexable pages
 │
 ├── css/
 │   └── style.css         # Stylesheet
@@ -85,25 +79,9 @@ portfolio-website/
    ```
 2. Open `index.html` in your browser.  
 
-### Secure Facebook Blog Import
-The blog requests Facebook posts silently from `/api/facebook-posts`. The endpoint must run on the hosting platform or backend and use a Facebook Page Access Token stored in a server-side environment variable. Never place the token in HTML, `js/script.js`, or any public frontend configuration.
+### Retired Blog
 
-The endpoint should return a JSON array using this shape:
-
-```json
-[
-  {
-    "id": "facebook-post-id",
-    "title": "Post title",
-    "category": "Facebook",
-    "date": "2026-08-19",
-    "excerpt": "Short post summary.",
-    "content": "Sanitized post content."
-  }
-]
-```
-
-If the endpoint is unavailable, the blog quietly continues showing local and built-in posts.
+The Blog page has been removed from the repository and site navigation.
 
 ### Option 2 – Live Deployment  
 The website is hosted on **GitHub Pages**:  
@@ -127,7 +105,6 @@ Fork the repo, create a feature branch, and submit a pull request.
 - 🌙 **Dark/Light mode toggle** for accessibility.  
 - 📩 **Backend integration** for the contact form (Node.js, Firebase, or Formspree).  
 - 🌐 **Multilingual support** (English + Swahili).  
-- 📊 **Blog Section** to share insights on Data Analytics and AI.  
 - 🔐 **Enhanced Security** with input sanitization and reCAPTCHA for the contact form.  
 
 ---

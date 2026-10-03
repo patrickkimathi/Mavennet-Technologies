@@ -2,9 +2,6 @@
 // GLOBAL DOM LOADING HELPER
 // ======================================
 document.addEventListener("DOMContentLoaded", () => {
-  // Smooth initialization log
-  console.log("✅ Portfolio Script Loaded Successfully");
-
   // ===============================
   // 1️⃣ MOBILE MENU TOGGLE
   // ===============================
@@ -30,90 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('input[type="date"]').forEach(dateInput => {
     dateInput.min = todayValue;
   });
-
-  // ===============================
-  // 1️⃣.5️⃣ HERO CAROUSEL - SLIDING BACKGROUND IMAGES
-  // ===============================
-  const slides = document.querySelectorAll(".slide");
-  const indicators = document.querySelectorAll(".indicator");
-  let currentSlide = 0;
-
-  function showSlide(index) {
-    if (slides.length > 0) {
-      slides.forEach(slide => slide.classList.remove("active"));
-      indicators.forEach(indicator => indicator.classList.remove("active"));
-
-      slides[index].classList.add("active");
-      if (indicators[index]) {
-        indicators[index].classList.add("active");
-      }
-    }
-  }
-
-  function nextSlide() {
-    if (slides.length > 0) {
-      currentSlide = (currentSlide + 1) % slides.length;
-      showSlide(currentSlide);
-    }
-  }
-
-  function goToSlide(index) {
-    currentSlide = index;
-    showSlide(currentSlide);
-  }
-
-  // Auto-advance carousel every 5 seconds (only if slides exist)
-  let carouselInterval = null;
-  if (slides.length > 1) {
-    carouselInterval = setInterval(nextSlide, 5000);
-
-    // Add click handlers to indicators
-    indicators.forEach(indicator => {
-      indicator.addEventListener("click", () => {
-        const slideIndex = parseInt(indicator.dataset.slide);
-        goToSlide(slideIndex);
-        clearInterval(carouselInterval);
-        carouselInterval = setInterval(nextSlide, 5000);
-      });
-    });
-  }
-
-  if (slides.length > 0) {
-    showSlide(0);
-  }
-
-  // Initialize first slide
-  if (slides.length) {
-    showSlide(0);
-  }
-
-  // ===============================
-  // 2️⃣ SMOOTH SCROLL FOR ANCHORS
-  // ===============================
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener("click", function (e) {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute("href"));
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth" });
-      }
-    });
-  });
-
-  // ===============================
-  // 3️⃣ HERO TEXT FADE-IN ON LOAD
-  // ===============================
-  const heroText = document.querySelector(".hero-text");
-  if (heroText) {
-    heroText.style.opacity = "0";
-    heroText.style.transform = "translateY(30px)";
-
-    setTimeout(() => {
-      heroText.style.transition = "all 1s ease-out";
-      heroText.style.opacity = "1";
-      heroText.style.transform = "translateY(0)";
-    }, 200);
-  }
 
   // ===============================
   // 4️⃣ SCROLL REVEAL FOR CARDS
@@ -254,434 +167,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
-
-  const reviewForm = document.getElementById("reviewForm");
-  const approvedReviews = document.getElementById("approvedReviews");
-  const pendingReviews = document.getElementById("pendingReviews");
-  const reviewFormStatus = document.getElementById("reviewFormStatus");
-
-  if (reviewForm && approvedReviews && pendingReviews) {
-    const pendingReviewKey = "mavennetPendingReviews";
-    const approvedReviewKey = "mavennetApprovedReviews";
-    let pendingReviewList = JSON.parse(localStorage.getItem(pendingReviewKey) || "[]");
-    let approvedReviewList = JSON.parse(localStorage.getItem(approvedReviewKey) || "[]");
-
-    if (!Array.isArray(pendingReviewList)) pendingReviewList = [];
-    if (!Array.isArray(approvedReviewList)) approvedReviewList = [];
-
-    function reviewStars(rating) {
-      return "★".repeat(rating) + "☆".repeat(5 - rating);
-    }
-
-    function renderApprovedReviews() {
-      approvedReviews.replaceChildren();
-      if (!approvedReviewList.length) {
-        const emptyMessage = document.createElement("p");
-        emptyMessage.className = "review-empty";
-        emptyMessage.textContent = "No verified reviews yet. Be the first to share your experience.";
-        approvedReviews.appendChild(emptyMessage);
-        return;
-      }
-
-      approvedReviewList.forEach(review => {
-        const item = document.createElement("article");
-        item.className = "review-item";
-        const meta = document.createElement("div");
-        meta.className = "review-meta";
-        const author = document.createElement("strong");
-        author.textContent = `${review.name} - ${review.service}`;
-        const stars = document.createElement("span");
-        stars.className = "review-stars";
-        stars.textContent = reviewStars(review.rating);
-        stars.setAttribute("aria-label", `${review.rating} out of 5 stars`);
-        meta.append(author, stars);
-        const comment = document.createElement("p");
-        comment.textContent = review.comment;
-        item.append(meta, comment);
-        approvedReviews.appendChild(item);
-      });
-    }
-
-    function renderPendingReviews() {
-      pendingReviews.replaceChildren();
-      if (!pendingReviewList.length) {
-        const emptyMessage = document.createElement("p");
-        emptyMessage.className = "review-empty";
-        emptyMessage.textContent = "There are no reviews waiting for verification.";
-        pendingReviews.appendChild(emptyMessage);
-        return;
-      }
-
-      pendingReviewList.forEach(review => {
-        const item = document.createElement("article");
-        item.className = "pending-review";
-        const meta = document.createElement("div");
-        meta.className = "review-meta";
-        const author = document.createElement("strong");
-        author.textContent = `${review.name} - ${review.service}`;
-        const stars = document.createElement("span");
-        stars.className = "review-stars";
-        stars.textContent = reviewStars(review.rating);
-        meta.append(author, stars);
-        const comment = document.createElement("p");
-        comment.textContent = review.comment;
-        const actions = document.createElement("div");
-        actions.className = "pending-review-actions";
-        const approveButton = document.createElement("button");
-        approveButton.type = "button";
-        approveButton.textContent = "Approve";
-        approveButton.addEventListener("click", () => {
-          approvedReviewList.unshift(review);
-          pendingReviewList = pendingReviewList.filter(itemReview => itemReview.id !== review.id);
-          saveReviews();
-        });
-        const rejectButton = document.createElement("button");
-        rejectButton.type = "button";
-        rejectButton.textContent = "Reject";
-        rejectButton.addEventListener("click", () => {
-          pendingReviewList = pendingReviewList.filter(itemReview => itemReview.id !== review.id);
-          saveReviews();
-        });
-        actions.append(approveButton, rejectButton);
-        item.append(meta, comment, actions);
-        pendingReviews.appendChild(item);
-      });
-    }
-
-    function saveReviews() {
-      localStorage.setItem(pendingReviewKey, JSON.stringify(pendingReviewList));
-      localStorage.setItem(approvedReviewKey, JSON.stringify(approvedReviewList));
-      renderApprovedReviews();
-      renderPendingReviews();
-    }
-
-    reviewForm.addEventListener("submit", event => {
-      event.preventDefault();
-      if (!reviewForm.checkValidity()) {
-        reviewForm.reportValidity();
-        return;
-      }
-      const formData = new FormData(reviewForm);
-      pendingReviewList.unshift({
-        id: `review-${Date.now()}`,
-        name: formData.get("name").trim(),
-        service: formData.get("service"),
-        rating: Number(formData.get("rating")),
-        comment: formData.get("comment").trim()
-      });
-      saveReviews();
-      reviewForm.reset();
-      reviewFormStatus.textContent = "Thank you. Your review is waiting for verification.";
-    });
-
-    renderApprovedReviews();
-    renderPendingReviews();
-  }
-
-  // ===============================
-  // 6️⃣ DARK MODE TOGGLE
-  // ===============================
-  const darkModeToggle = document.getElementById("darkModeToggle");
-  const body = document.body;
-
-  if (darkModeToggle) {
-    // Load saved theme
-    if (localStorage.getItem("darkMode") === "enabled") {
-      body.classList.add("dark-mode");
-      darkModeToggle.checked = true;
-    }
-
-    darkModeToggle.addEventListener("change", () => {
-      if (darkModeToggle.checked) {
-        body.classList.add("dark-mode");
-        localStorage.setItem("darkMode", "enabled");
-      } else {
-        body.classList.remove("dark-mode");
-        localStorage.setItem("darkMode", "disabled");
-      }
-    });
-  }
-
-  // ===============================
-  // 7️⃣ BACK TO TOP BUTTON
-  // ===============================
-  const backToTopButton = document.getElementById("backToTop");
-  if (backToTopButton) {
-    window.addEventListener("scroll", () => {
-      backToTopButton.style.display = window.scrollY > 300 ? "block" : "none";
-    });
-
-    backToTopButton.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  }
-
-  // ===============================
-  // 8️⃣ PROJECTS PAGE – TAB SWITCHING
-  // ===============================
-  const tabButtons = document.querySelectorAll(".tab-button");
-  const tabContents = document.querySelectorAll(".tab-content");
-
-  if (tabButtons.length && tabContents.length) {
-    tabButtons.forEach(button => {
-      button.addEventListener("click", () => {
-        tabButtons.forEach(b => b.classList.remove("active"));
-        tabContents.forEach(c => c.classList.remove("active"));
-
-        button.classList.add("active");
-        const target = document.getElementById(button.dataset.tab);
-        if (target) {
-          target.classList.add("active");
-          target.classList.add("fade-in");
-          setTimeout(() => target.classList.remove("fade-in"), 500);
-        }
-      });
-    });
-  }
-
-  // ===============================
-  // 9️⃣ PROJECTS REVEAL ON SCROLL
-  // ===============================
-  const projectSections = document.querySelectorAll(".tab-content");
-
-  function revealProjectsOnScroll() {
-    const trigger = window.innerHeight * 0.9;
-    projectSections.forEach(section => {
-      const top = section.getBoundingClientRect().top;
-      if (top < trigger) {
-        section.classList.add("show");
-      }
-    });
-  }
-
-  if (projectSections.length) {
-    window.addEventListener("scroll", revealProjectsOnScroll);
-    revealProjectsOnScroll();
-  }
-
-  // ===============================
-  // 🔟 READ MORE / LESS BUTTONS
-  // ===============================
-  const readMoreBtns = document.querySelectorAll(".read-more-btn");
-  readMoreBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const content = btn.previousElementSibling;
-      const isVisible = content.style.display === "block";
-      content.style.display = isVisible ? "none" : "block";
-      btn.textContent = isVisible ? "Read more..." : "Read less...";
-    });
-  });
-
-  // ===============================
-  // 1️⃣1️⃣ THIRD-PARTY LIBRARIES INIT
-  // ===============================
-  if (typeof AOS !== "undefined") {
-    AOS.init({ duration: 1000, once: true });
-  }
-
-  if (typeof Swiper !== "undefined") {
-    new Swiper(".swiper-container", {
-      loop: true,
-      autoplay: { delay: 5000 },
-      pagination: { el: ".swiper-pagination", clickable: true },
-      navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
-    });
-  }
-
-  if (typeof lightbox !== "undefined") {
-    lightbox.option({ resizeDuration: 200, wrapAround: true });
-  }
-
-  if (typeof Typed !== "undefined") {
-    new Typed(".typed-text", {
-      strings: ["Developer.", "Data Analyst.", "Creator."],
-      typeSpeed: 100,
-      backSpeed: 50,
-      loop: true,
-    });
-  }
-
-  if (typeof CountUp !== "undefined") {
-    const stats = document.querySelectorAll(".stat-number");
-    stats.forEach(stat => {
-      const endValue = parseInt(stat.getAttribute("data-target"), 10);
-      const counter = new CountUp(stat, endValue);
-      if (!counter.error) counter.start();
-    });
-  }
-
-  if (typeof Isotope !== "undefined") {
-    const iso = new Isotope(".portfolio-container", {
-      itemSelector: ".portfolio-item",
-      layoutMode: "fitRows",
-    });
-
-    const filterButtons = document.querySelectorAll(".filter-button");
-    filterButtons.forEach(button => {
-      button.addEventListener("click", () => {
-        const filterValue = button.getAttribute("data-filter");
-        iso.arrange({ filter: filterValue });
-        filterButtons.forEach(b => b.classList.remove("active"));
-        button.classList.add("active");
-      });
-    });
-  }
-
-  if (window.$ && $(".justified-gallery").length) {
-    $(".justified-gallery").justifiedGallery({
-      rowHeight: 200,
-      lastRow: "nojustify",
-      margins: 5,
-    });
-  }
-
-  // ===============================
-  // 1️⃣2️⃣ LMS TRAINING PACKAGE FUNCTIONALITY
-  // ===============================
-  const toggleBtns = document.querySelectorAll(".toggle-btn");
-  const packageModules = document.querySelectorAll(".package-modules");
-  const moduleCheckboxes = document.querySelectorAll(".module-checkbox");
-
-  // Toggle Package Modules
-  if (toggleBtns.length) {
-    toggleBtns.forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const packageName = btn.getAttribute("data-package");
-        const packageElement = btn.closest(".training-package");
-        const modulesContainer = packageElement.querySelector(".package-modules");
-        
-        // Toggle expanded class
-        btn.classList.toggle("expanded");
-        modulesContainer.classList.toggle("hidden");
-        
-        // Add smooth animation
-        if (!modulesContainer.classList.contains("hidden")) {
-          modulesContainer.style.maxHeight = modulesContainer.scrollHeight + "px";
-        } else {
-          modulesContainer.style.maxHeight = "0";
-        }
-      });
-    });
-  }
-
-  // Update Progress on Checkbox Change
-  if (moduleCheckboxes.length) {
-    moduleCheckboxes.forEach(checkbox => {
-      checkbox.addEventListener("change", () => {
-        const packageName = checkbox.getAttribute("data-package");
-        updatePackageProgress(packageName);
-        
-        // Save progress to localStorage
-        saveProgress(packageName);
-      });
-    });
-  }
-
-  // Calculate and Update Progress
-  function updatePackageProgress(packageName) {
-    const packageElement = document.querySelector(`.training-package [data-package="${packageName}"]`).closest(".training-package");
-    const checkboxes = packageElement.querySelectorAll(`.module-checkbox[data-package="${packageName}"]`);
-    const checkedCount = packageElement.querySelectorAll(`.module-checkbox[data-package="${packageName}"]:checked`).length;
-    
-    const progressPercentage = Math.round((checkedCount / checkboxes.length) * 100);
-    
-    const progressBar = packageElement.querySelector(".progress-fill");
-    const progressText = packageElement.querySelector(".progress-text");
-    
-    progressBar.style.width = progressPercentage + "%";
-    progressText.textContent = progressPercentage + "% Complete";
-    
-    // Add celebration animation at 100%
-    if (progressPercentage === 100) {
-      packageElement.classList.add("completed");
-      showCelebration(packageElement);
-    } else {
-      packageElement.classList.remove("completed");
-    }
-  }
-
-  // Show Celebration Animation
-  function showCelebration(element) {
-    const progressBar = element.querySelector(".progress-bar-container");
-    progressBar.style.animation = "pulse 0.6s ease";
-    setTimeout(() => {
-      progressBar.style.animation = "";
-    }, 600);
-  }
-
-  // Save Progress to localStorage
-  function saveProgress(packageName) {
-    const packageElement = document.querySelector(`.training-package [data-package="${packageName}"]`).closest(".training-package");
-    const checkboxes = packageElement.querySelectorAll(`.module-checkbox[data-package="${packageName}"]`);
-    const checkedModules = [];
-    
-    checkboxes.forEach((checkbox, index) => {
-      if (checkbox.checked) {
-        checkedModules.push(index);
-      }
-    });
-    
-    localStorage.setItem(`training_progress_${packageName}`, JSON.stringify(checkedModules));
-  }
-
-  // Load Progress from localStorage
-  function loadProgress(packageName) {
-    const saved = localStorage.getItem(`training_progress_${packageName}`);
-    if (saved) {
-      const checkedIndices = JSON.parse(saved);
-      const packageElement = document.querySelector(`.training-package [data-package="${packageName}"]`).closest(".training-package");
-      const checkboxes = packageElement.querySelectorAll(`.module-checkbox[data-package="${packageName}"]`);
-      
-      checkedIndices.forEach(index => {
-        if (checkboxes[index]) {
-          checkboxes[index].checked = true;
-        }
-      });
-      
-      updatePackageProgress(packageName);
-    }
-  }
-
-  // Load all saved progress on page load
-  const allPackages = ["excel", "sheets", "powerbi", "tableau", "python", "sql", "marketing"];
-  allPackages.forEach(pkg => {
-    loadProgress(pkg);
-  });
-
-  // ===============================
-  // 1️⃣3️⃣ MODULE TOPICS EXPAND/COLLAPSE
-  // ===============================
-  const moduleExpandBtns = document.querySelectorAll(".module-expand-btn");
-  
-  if (moduleExpandBtns.length) {
-    moduleExpandBtns.forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const moduleItem = btn.closest(".module-item");
-        const moduleTopics = moduleItem.querySelector(".module-topics");
-        
-        // Toggle expanded state
-        btn.classList.toggle("active");
-        moduleTopics.classList.toggle("hidden");
-      });
-    });
-  }
-
-  // Add CSS for animation
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.02); }
-      100% { transform: scale(1); }
-    }
-    
-    .training-package.completed .progress-bar-container {
-      background: linear-gradient(90deg, rgba(0, 86, 214, 0.05) 0%, rgba(255, 122, 0, 0.05) 100%);
-    }
-  `;
-  document.head.appendChild(style);
 
   // ===============================
   // 🛒 E-COMMERCE SHOPPING CART FUNCTIONALITY
@@ -954,13 +439,366 @@ document.addEventListener("DOMContentLoaded", () => {
   const sortSelect = document.getElementById("sortCourses");
   const courseCards = document.querySelectorAll(".course-card");
   const courseSearchMessage = document.getElementById("courseSearchMessage");
+  const coursePathways = {
+    "data-analytics": "Data Analytics",
+    "business-intelligence": "Business Intelligence",
+    "ai-emerging": "AI & Emerging Technology",
+    "digital-creative": "Digital & Creative Skills"
+  };
+  const selectedPathway = new URLSearchParams(window.location.search).get("pathway");
+  const selectedPathwayName = coursePathways[selectedPathway];
+  const courseListTitle = document.getElementById("courseListTitle");
+  const coursePathwaySummary = document.getElementById("coursePathwaySummary");
+  const coursePathwayName = document.getElementById("coursePathwayName");
+  if (selectedPathwayName) {
+    if (courseListTitle) {
+      courseListTitle.textContent = `${selectedPathwayName} Courses`;
+    }
+    if (coursePathwaySummary && coursePathwayName) {
+      coursePathwayName.textContent = selectedPathwayName;
+      coursePathwaySummary.hidden = false;
+    }
+  }
+
+  const matchesSelectedPathway = card => !selectedPathwayName
+    || card.dataset.pathways?.split(/\s+/).includes(selectedPathway);
+
+  const courseLearningDetails = {
+    "Excel For Data Analysis": {
+      outline: [
+        "1. Introduction to Excel for Data Analysis: analytics workflows, interface, workbooks, and navigation.",
+        "2. Excel Fundamentals: workbook management, cell references, data entry, formulas, and tables.",
+        "3. Sorting, Filtering, and Tables: organize datasets and apply structured formatting.",
+        "4. Data Preparation and Cleaning: handle missing, duplicate, and inconsistent values.",
+        "5. Core Functions: arithmetic, statistical, aggregate functions, and named ranges.",
+        "6. Logical Functions: IF, SWITCH, nested logic, COUNTIF, SUMIF, and related functions.",
+        "7. Data Transformation and Lookups: VLOOKUP, XLOOKUP, INDEX, and MATCH.",
+        "8. Data Visualization: charts, trends, dashboards, and data storytelling.",
+        "9. Pivot Tables: summarize data, use calculated fields, slicers, and interactive reports.",
+        "10. Data Validation and Control: input rules, error reduction, and data integrity.",
+        "11. Power Query: ETL, data cleaning, reshaping, and combining datasets.",
+        "12. Power Pivot and Data Modeling: relationships, DAX, measures, and dashboards.",
+        "13. Real-World Application: acquire, clean, transform, and report on data."
+      ],
+      impact: "Support faster recurring reports and more confident decisions with structured spreadsheet analysis."
+    },
+    "Google Sheets For Data Analysis": {
+      outline: [
+        "1. Google Sheets Fundamentals.",
+        "2. Data Cleaning and Preparation.",
+        "3. Formulas and Functions.",
+        "4. Data Validation and Data Management.",
+        "5. Pivot Tables and Data Summarization.",
+        "6. Data Analysis and Insights.",
+        "7. Charts and Data Visualization.",
+        "8. Dashboards and Reporting.",
+        "9. Automation with Google Sheets.",
+        "10. Real-World Data Analysis Project."
+      ],
+      impact: "Help teams collaborate on current data and reduce manual handoffs between reports."
+    },
+    "Power BI Mastery": {
+      outline: [
+        "1. Introduction to Data Analytics: BI concepts, the Power BI ecosystem, and analytics workflows.",
+        "2. Data Acquisition and Preparation: connect to sources and understand storage modes.",
+        "3. Data Transformation with Power Query: clean, merge, split, and reshape data.",
+        "4. Data Modeling: fact and dimension tables, schemas, relationships, and date tables.",
+        "5. DAX Fundamentals and Advanced Calculations: columns, measures, functions, and KPIs.",
+        "6. Visualizing and Analyzing Data: report design, visualizations, and interactive features.",
+        "7. Advanced Analytics: trends, forecasting, decomposition trees, and scenario analysis.",
+        "8. Publishing and Sharing Reports: workspaces, dashboards, apps, and collaboration.",
+        "9. Managing and Securing Power BI: refresh, gateways, security, and data governance.",
+        "10. Practical Projects: sales, HR, financial, and executive performance dashboards."
+      ],
+      impact: "Turn operational data into clear reports that teams can use to monitor performance."
+    },
+    "Digital Marketing and E-Commerce": {
+      outline: [
+        "1. Digital Marketing Fundamentals.",
+        "2. Market & Customer Research.",
+        "3. Content Marketing & Social Media.",
+        "4. SEO & Search Marketing.",
+        "5. Email & Mobile Marketing.",
+        "6. Paid Advertising & Campaign Management.",
+        "7. E-Commerce Strategy & Platforms.",
+        "8. Online Payments & Customer Experience.",
+        "9. Marketing Analytics & Performance Measurement.",
+        "10. Digital Marketing & E-Commerce Project."
+      ],
+      impact: "Improve how a business attracts, engages, and measures its online audience."
+    },
+    "UI/UX Design Masterclass": {
+      outline: [
+        "1. UI/UX Fundamentals.",
+        "2. User Research and Personas.",
+        "3. User Journeys and Information Architecture.",
+        "4. Wireframing and Prototyping.",
+        "5. UI Design and Visual Principles.",
+        "6. Figma and Design Systems.",
+        "7. Responsive and Mobile Design.",
+        "8. Usability Testing.",
+        "9. Design Handoff and Collaboration.",
+        "10. Real-World UI/UX Project."
+      ],
+      impact: "Apply user-centered design methods to make digital experiences easier to understand and use."
+    },
+    "Python For Data Science": {
+      outline: [
+        "1. Python Fundamentals.",
+        "2. NumPy for Data Analysis.",
+        "3. Pandas for Data Manipulation.",
+        "4. Data Cleaning and Preparation.",
+        "5. Exploratory Data Analysis (EDA).",
+        "6. Data Visualization with Matplotlib and Seaborn.",
+        "7. Working with Excel, CSV, SQL, and APIs.",
+        "8. Real-World Data Analysis Project."
+      ],
+      impact: "Build repeatable analysis skills for data, reporting, and entry-level data science tasks."
+    },
+    "Data Literacy": {
+      outline: [
+        "1. Data Literacy Fundamentals.",
+        "2. Data Types and Data Sources.",
+        "3. Data Collection and Quality.",
+        "4. Data Cleaning and Preparation.",
+        "5. Descriptive Statistics.",
+        "6. Data Interpretation and Analysis.",
+        "7. Data Visualization and Storytelling.",
+        "8. Critical Thinking with Data.",
+        "9. Data-Driven Decision Making.",
+        "10. Data Ethics, Privacy, and Security."
+      ],
+      impact: "Help non-technical teams interpret evidence and ask better questions before making decisions."
+    },
+    "SQL For Data Analysis": {
+      outline: [
+        "1. SQL Fundamentals: database basics, SELECT, WHERE, ORDER BY, and LIMIT.",
+        "2. Filtering and Aggregation: AND/OR, GROUP BY, HAVING, COUNT, SUM, AVG, MIN, and MAX.",
+        "3. Joins and Relationships: INNER, LEFT, RIGHT joins, and multi-table analysis.",
+        "4. Subqueries and CTEs: nested queries, CTEs, and reusable analysis logic.",
+        "5. Data Cleaning with SQL: NULLs, duplicates, CASE, and text/date transformations.",
+        "6. Advanced Analytics: window functions, ranking, running totals, and comparisons.",
+        "7. Business Analysis with SQL: KPIs, customer, sales, revenue, and performance analysis.",
+        "8. SQL Reporting and Optimization: views, query optimization, and analytical reporting.",
+        "9. Capstone Project: analyze a dataset and produce actionable business insights."
+      ],
+      impact: "Retrieve and summarize data directly from relational databases for reporting and analysis."
+    },
+    "Tableau": {
+      outline: [
+        "1. Introduction to Tableau: interface, ecosystem, dimensions, measures, and basic visualizations.",
+        "2. Data Connection and Preparation: Excel/CSV sources, relationships, joins, unions, and cleaning.",
+        "3. Data Visualization Fundamentals: charts, tables, maps, formatting, and visual communication.",
+        "4. Filters and Interactivity: groups, sets, hierarchies, sorting, and drill-down analysis.",
+        "5. Calculations and Analytics: calculated fields, date calculations, ratios, and table calculations.",
+        "6. Advanced Tableau Analytics: LOD expressions, ranking, running totals, and moving averages.",
+        "7. Parameters and Interactive Analysis: dynamic calculations, what-if analysis, and dashboard actions.",
+        "8. Dashboard Design and Storytelling: KPI cards, layouts, navigation, tooltips, and dashboard UX.",
+        "9. Business Intelligence with Tableau: sales, customer, HR, marketing, and financial scenarios.",
+        "10. Capstone Portfolio Project: build an executive dashboard from data through business insight."
+      ],
+      impact: "Communicate patterns and comparisons through interactive visual analytics."
+    },
+    "Machine Learning": {
+      outline: [
+        "1. Machine Learning Fundamentals.",
+        "2. Data Preprocessing & Feature Engineering.",
+        "3. Exploratory Data Analysis for ML.",
+        "4. Supervised Learning.",
+        "5. Unsupervised Learning.",
+        "6. Model Evaluation & Validation.",
+        "7. Feature Selection & Optimization.",
+        "8. Ensemble Learning.",
+        "9. Model Deployment & MLOps.",
+        "10. End-to-End Machine Learning Project."
+      ],
+      impact: "Build a foundation for evaluating predictive use cases and contributing to analytics projects."
+    },
+    "Data Quality": {
+      outline: [
+        "1. Data Quality Fundamentals.",
+        "2. Data Profiling & Validation.",
+        "3. Data Cleaning & Error Management.",
+        "4. Data Quality Monitoring & Reporting.",
+        "5. Data Governance & Stewardship.",
+        "6. Practical Data Quality Project."
+      ],
+      impact: "Improve trust in reports by catching incomplete, inconsistent, or inaccurate data earlier."
+    },
+    "AI For Business": {
+      outline: [
+        "1. AI Fundamentals for Business.",
+        "2. Generative AI and Large Language Models.",
+        "3. AI-Powered Productivity and Automation.",
+        "4. AI for Marketing and Customer Experience.",
+        "5. AI for Data Analysis and Business Intelligence.",
+        "6. AI for Business Strategy and Decision-Making.",
+        "7. AI Tools and Workflow Integration.",
+        "8. AI Ethics, Privacy, and Responsible Use.",
+        "9. AI Implementation and ROI.",
+        "10. Practical AI Business Project."
+      ],
+      impact: "Help decision-makers assess where AI may support work without overlooking governance and risk."
+    },
+    "AI For Professionals": {
+      outline: [
+        "1. AI Fundamentals and Workplace Applications.",
+        "2. Generative AI and Prompt Engineering.",
+        "3. AI-Powered Research and Information Management.",
+        "4. AI for Productivity and Task Automation.",
+        "5. AI for Data Analysis and Reporting.",
+        "6. AI for Content Creation and Communication.",
+        "7. AI Tools for Professional Workflows.",
+        "8. AI Ethics, Privacy, and Responsible Use.",
+        "9. Building AI-Powered Workflows.",
+        "10. Practical AI Productivity Project."
+      ],
+      impact: "Apply AI to routine work while checking accuracy, privacy, and appropriate human review."
+    },
+    "Microsoft Copilot": {
+      outline: [
+        "1. Microsoft Copilot Fundamentals.",
+        "2. Prompt Engineering for Copilot.",
+        "3. Copilot in Word.",
+        "4. Copilot in Excel.",
+        "5. Copilot in PowerPoint.",
+        "6. Copilot in Outlook and Teams.",
+        "7. Copilot for Data Analysis and Insights.",
+        "8. Copilot for Research and Content Creation.",
+        "9. Copilot Automation and Workflow Optimization.",
+        "10. Practical Microsoft Copilot Project."
+      ],
+      impact: "Use AI assistance to reduce repetitive work while keeping people responsible for the final result."
+    },
+    "Microsoft 365 Advanced": {
+      outline: [
+        "1. Microsoft 365 Ecosystem and Advanced Features.",
+        "2. Advanced Word and Document Management.",
+        "3. Advanced Excel and Data Analysis.",
+        "4. Advanced PowerPoint and Presentation Design.",
+        "5. Outlook and Advanced Email Management.",
+        "6. Microsoft Teams and Collaboration.",
+        "7. SharePoint and Document Management.",
+        "8. OneDrive and Cloud Productivity.",
+        "9. Power Automate and Workflow Automation.",
+        "10. Integrated Microsoft 365 Project."
+      ],
+      impact: "Improve collaboration and consistency across common workplace documents and processes."
+    },
+    "Canva Graphic Design": {
+      outline: ["Layout, typography, and color", "Templates and brand consistency", "Social media and presentation design"],
+      impact: "Produce consistent visual communication for small businesses, teams, or personal brands."
+    },
+    "Adobe Photoshop": {
+      outline: ["Image editing and retouching", "Compositing and typography", "Export assets for digital use"],
+      impact: "Prepare professional image assets for marketing and digital communication."
+    },
+    "Adobe Illustrator": {
+      outline: ["Vector drawing and shape tools", "Logo, icon, and illustration design", "Typography and scalable layouts"],
+      impact: "Create scalable brand and marketing graphics that remain crisp across sizes."
+    },
+    "Cybersecurity Awareness": {
+      outline: ["Recognize phishing and common threats", "Protect accounts and sensitive data", "Respond to common security incidents"],
+      impact: "Build everyday habits that reduce common security and data-handling risks."
+    },
+    "Vibe Coding for Kids": {
+      outline: ["Explore coding ideas and clear prompts", "Build small interactive digital projects", "Test, debug, and improve creations"],
+      impact: "Encourage digital confidence, creative problem-solving, and computational thinking."
+    },
+    "Vibe Coding for Adults": {
+      outline: ["Turn a problem into a project brief", "Use AI-assisted prompts and coding foundations", "Prototype, test, and refine a digital idea"],
+      impact: "Help learners explore and communicate digital ideas through hands-on prototyping."
+    }
+  };
+
+  courseCards.forEach((card, index) => {
+    const heading = card.querySelector(".course-details h3");
+    const courseTitle = heading?.textContent.trim();
+    const courseDescription = card.querySelector(".course-description")?.textContent.trim() || "Course overview not provided.";
+    const featureLabels = Array.from(card.querySelectorAll(".course-features .feature"), feature => feature.textContent.replace(/^✓\s*/, "").trim());
+    const moduleCount = featureLabels.find(feature => /modules?/i.test(feature)) || "Module count not listed";
+    const duration = featureLabels.find(feature => /hours?/i.test(feature)) || "Self-paced; total hours not listed";
+    const certificate = featureLabels.some(feature => /certificate/i.test(feature))
+      ? "Certificate included"
+      : "Certificate details not listed";
+    const access = featureLabels.find(feature => /access/i.test(feature)) || "Access details not listed";
+    const learningDetails = courseLearningDetails[courseTitle] || {
+      outline: ["Course concepts and tools", "Guided practice", "Applied learning"],
+      impact: "Build skills relevant to practical work in this subject area."
+    };
+
+    if (!heading || !courseTitle) {
+      return;
+    }
+
+    const detailsId = `course-detail-${index + 1}`;
+    const titleButton = document.createElement("button");
+    titleButton.className = "course-title-toggle";
+    titleButton.type = "button";
+    titleButton.setAttribute("aria-expanded", "false");
+    titleButton.setAttribute("aria-controls", detailsId);
+    const titleText = document.createElement("span");
+    titleText.textContent = courseTitle;
+    const toggleIcon = document.createElement("i");
+    toggleIcon.className = "fa-solid fa-chevron-down";
+    toggleIcon.setAttribute("aria-hidden", "true");
+    titleButton.append(titleText, toggleIcon);
+    heading.replaceChildren(titleButton);
+
+    const detailsPanel = document.createElement("section");
+    detailsPanel.className = "course-expanded-details";
+    detailsPanel.id = detailsId;
+    detailsPanel.hidden = true;
+
+    const overviewHeading = document.createElement("h4");
+    overviewHeading.textContent = "Course overview";
+    const overviewText = document.createElement("p");
+    overviewText.textContent = courseDescription;
+
+    const facts = document.createElement("dl");
+    facts.className = "course-detail-facts";
+    [["Duration", duration], ["Course structure", moduleCount], ["Certificate", certificate], ["Access", access]].forEach(([label, value]) => {
+      const fact = document.createElement("div");
+      const term = document.createElement("dt");
+      const description = document.createElement("dd");
+      term.textContent = label;
+      description.textContent = value;
+      fact.append(term, description);
+      facts.appendChild(fact);
+    });
+    const outlineHeading = document.createElement("h4");
+    outlineHeading.textContent = "Course outline";
+    const outline = document.createElement("ul");
+    learningDetails.outline.forEach(topic => {
+      const item = document.createElement("li");
+      item.textContent = topic;
+      outline.appendChild(item);
+    });
+
+    const relevanceHeading = document.createElement("h4");
+    relevanceHeading.textContent = "Business & career relevance";
+    const relevance = document.createElement("p");
+    relevance.textContent = learningDetails.impact;
+
+    detailsPanel.append(overviewHeading, overviewText, facts, outlineHeading, outline, relevanceHeading, relevance);
+    card.querySelector(".course-footer")?.before(detailsPanel);
+    titleButton.addEventListener("click", () => {
+      const isExpanded = titleButton.getAttribute("aria-expanded") === "true";
+      titleButton.setAttribute("aria-expanded", String(!isExpanded));
+      toggleIcon.classList.toggle("fa-chevron-down", isExpanded);
+      toggleIcon.classList.toggle("fa-chevron-up", !isExpanded);
+      detailsPanel.hidden = isExpanded;
+    });
+  });
 
   if (searchInput) {
-    searchInput.addEventListener("input", () => {
+    const filterCourses = () => {
       const searchTerm = searchInput.value.trim().toLowerCase();
       const searchWords = searchTerm.split(/\s+/).filter(word => word.length > 1);
       const scoredCards = Array.from(courseCards).map((card, index) => {
-        const searchableText = card.textContent.toLowerCase();
+        const searchableText = Array.from(card.querySelectorAll(
+          ".course-details h3, .course-subtitle, .course-features, .course-description"
+        ), field => field.textContent.toLowerCase()).join(" ");
         const score = searchWords.reduce((total, word) => {
           return total + (searchableText.includes(word) ? 1 : 0);
         }, 0);
@@ -970,7 +808,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (!searchTerm) {
         scoredCards.forEach(({ card }) => {
-          card.style.display = "";
+          card.style.display = matchesSelectedPathway(card) ? "" : "none";
         });
         if (courseSearchMessage) {
           courseSearchMessage.style.display = "none";
@@ -980,11 +818,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const matchingCards = scoredCards
-        .filter(({ score }) => score > 0)
+        .filter(({ card, score }) => score === searchWords.length && matchesSelectedPathway(card))
         .sort((a, b) => b.score - a.score || a.index - b.index);
       const cardsToShow = matchingCards.length > 0
         ? matchingCards
-        : scoredCards.filter(({ card }) => card.classList.contains("course-card-request") === false).slice(0, 3);
+        : scoredCards.filter(({ card }) => matchesSelectedPathway(card)
+          && card.classList.contains("course-card-request") === false).slice(0, 3);
 
       scoredCards.forEach(({ card }) => {
         card.style.display = cardsToShow.some(result => result.card === card) ? "" : "none";
@@ -999,7 +838,10 @@ document.addEventListener("DOMContentLoaded", () => {
           ? ""
           : `Sorry, we currently do not offer \"${searchInput.value.trim()}\", but we have something amazing for you:`;
       }
-    });
+    };
+
+    searchInput.addEventListener("input", filterCourses);
+    filterCourses();
   }
 
   if (sortSelect) {
@@ -1034,226 +876,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const blogPostsGrid = document.getElementById("blogPostsGrid");
-  const blogPostForm = document.getElementById("blogPostForm");
-
-  if (blogPostsGrid && blogPostForm) {
-    const defaultBlogPosts = [
-      {
-        id: "superstore-dashboard",
-        title: "Superstore Sales Dashboard: A Power BI Project",
-        category: "Data & Analytics",
-        date: "2025-10-08",
-        excerpt: "In this project, I built a Superstore Sales Dashboard using Power BI to explore sales performance, profitability, customer behavior, and operational efficiency.",
-        content: "The dashboard transforms the open-source Superstore dataset from Kaggle into actionable business insights, showcasing my skills in data modeling, DAX, and data storytelling.\n\nProject Objective\nThe dashboard analyzes Superstore sales data to uncover trends influencing profitability and customer satisfaction. It includes metrics like total sales, profit margins, shipping mode performance, and order duration distribution.\n\nKey visuals include KPI Cards, Donut Charts, Bar Charts, Combo Charts, and Histograms. Each offers insight into sales patterns, top-performing categories, and customer segments.\n\nTools: Power BI, DAX, Power Query\n\nThis project demonstrates how to transform raw datasets into powerful business intelligence dashboards for better decision-making.\n\nSpecial thanks to Future Interns for providing the learning environment and to Kaggle for making high-quality open datasets accessible."
-      },
-      {
-        id: "web-trends-2025",
-        title: "Web Development Trends in 2025",
-        category: "Digital Growth",
-        date: "2025-02-15",
-        excerpt: "As technology evolves, so do the trends shaping modern web development. In 2025, developers are embracing smarter tools, AI-driven experiences, and highly responsive designs to improve performance and accessibility.",
-        content: "AI-Powered Websites: Personalized content through machine learning algorithms.\n\nLow-Code Platforms: Faster deployment with tools like Webflow and Bubble.\n\nServerless Architecture: More scalable, cost-effective backend solutions.\n\nCybersecurity Focus: Enhanced protocols to protect user data and privacy.\n\nThese trends enable developers to build user-centered, secure, and efficient digital experiences. Staying ahead of these innovations ensures competitive advantage in the fast-paced web industry."
-      },
-      {
-        id: "ui-ux-design",
-        title: "Why UI/UX Design Matters",
-        category: "Design",
-        date: "2025-03-10",
-        excerpt: "UI/UX design plays a crucial role in creating intuitive digital products that meet user needs. A seamless experience can significantly boost engagement and retention rates.",
-        content: "Good UI focuses on the visual appeal, while UX ensures smooth interaction and flow. Together, they enhance satisfaction and encourage brand loyalty.\n\nDesigners today combine empathy, research, and testing to build interfaces that simplify complex processes and delight users.\n\nUltimately, investing in UI/UX is not just about aesthetics; it is about delivering functional, accessible, and impactful experiences."
-      }
-    ];
-
-    let savedBlogPosts = JSON.parse(localStorage.getItem("mavennetBlogPosts") || "[]");
-    let importedBlogPosts = [];
-    let blogUser = JSON.parse(localStorage.getItem("mavennetBlogUser") || "null");
-    let blogComments = JSON.parse(localStorage.getItem("mavennetBlogComments") || "{}") || {};
-    const blogLoginForm = document.getElementById("blogLoginForm");
-    const blogLoginEmail = document.getElementById("blogLoginEmail");
-    const blogAuthStatus = document.getElementById("blogAuthStatus");
-    if (!Array.isArray(savedBlogPosts)) {
-      savedBlogPosts = [];
-    }
-
-    function formatBlogDate(dateValue) {
-      return new Intl.DateTimeFormat("en", {
-        month: "short",
-        day: "numeric",
-        year: "numeric"
-      }).format(new Date(`${dateValue}T00:00:00`));
-    }
-
-    function renderBlogPosts() {
-      blogPostsGrid.replaceChildren();
-      [...savedBlogPosts, ...importedBlogPosts, ...defaultBlogPosts].forEach(post => {
-        const article = document.createElement("article");
-        article.className = "blog-post-card";
-        article.dataset.postId = post.id;
-
-        const meta = document.createElement("div");
-        meta.className = "post-meta";
-        const category = document.createElement("span");
-        category.textContent = post.category;
-        const date = document.createElement("time");
-        date.dateTime = post.date;
-        date.textContent = formatBlogDate(post.date);
-        meta.append(category, date);
-
-        const title = document.createElement("h3");
-        title.textContent = post.title;
-
-        const excerpt = document.createElement("p");
-        excerpt.className = "post-excerpt";
-        excerpt.textContent = post.excerpt;
-
-        const content = document.createElement("p");
-        content.className = "post-content";
-        content.textContent = post.content;
-
-        const actions = document.createElement("div");
-        actions.className = "post-actions";
-
-        const readMore = document.createElement("button");
-        readMore.className = "post-read-more";
-        readMore.type = "button";
-        readMore.textContent = "Read more";
-        readMore.addEventListener("click", () => {
-          const expanded = article.classList.toggle("is-expanded");
-          readMore.textContent = expanded ? "Show less" : "Read more";
-        });
-        actions.appendChild(readMore);
-
-        if (savedBlogPosts.some(savedPost => savedPost.id === post.id)) {
-          const deletePost = document.createElement("button");
-          deletePost.className = "post-delete";
-          deletePost.type = "button";
-          deletePost.textContent = "Delete";
-          deletePost.addEventListener("click", () => {
-            savedBlogPosts = savedBlogPosts.filter(savedPost => savedPost.id !== post.id);
-            localStorage.setItem("mavennetBlogPosts", JSON.stringify(savedBlogPosts));
-            renderBlogPosts();
-          });
-          actions.appendChild(deletePost);
-        }
-
-        const comments = document.createElement("section");
-        comments.className = "post-comments";
-        const commentsHeading = document.createElement("strong");
-        commentsHeading.textContent = "Comments";
-        const commentList = document.createElement("ul");
-        commentList.className = "post-comment-list";
-        (blogComments[post.id] || []).forEach(comment => {
-          const item = document.createElement("li");
-          item.textContent = `${comment.email}: ${comment.text}`;
-          commentList.appendChild(item);
-        });
-
-        const commentForm = document.createElement("form");
-        commentForm.className = "post-comment-form";
-        const commentInput = document.createElement("textarea");
-        commentInput.required = true;
-        commentInput.maxLength = 500;
-        commentInput.placeholder = blogUser ? "Write a comment..." : "Sign in with a valid email to comment";
-        commentInput.disabled = !blogUser;
-        const commentSubmit = document.createElement("button");
-        commentSubmit.className = "post-comment-submit";
-        commentSubmit.type = "submit";
-        commentSubmit.textContent = "Post comment";
-        commentSubmit.disabled = !blogUser;
-        commentForm.append(commentInput, commentSubmit);
-        commentForm.addEventListener("submit", event => {
-          event.preventDefault();
-          if (!blogUser || !commentInput.value.trim()) {
-            return;
-          }
-          blogComments[post.id] = blogComments[post.id] || [];
-          blogComments[post.id].push({ email: blogUser.email, text: commentInput.value.trim() });
-          localStorage.setItem("mavennetBlogComments", JSON.stringify(blogComments));
-          renderBlogPosts();
-        });
-        comments.append(commentsHeading, commentList, commentForm);
-
-        article.append(meta, title, excerpt, content, actions, comments);
-        blogPostsGrid.appendChild(article);
-      });
-    }
-
-    function isValidBlogEmail(email) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    }
-
-    if (blogUser) {
-      blogLoginEmail.value = blogUser.email;
-      blogAuthStatus.textContent = `Signed in as ${blogUser.email}.`;
-      blogAuthStatus.className = "blog-auth-status is-success";
-    }
-
-    blogLoginForm.addEventListener("submit", event => {
-      event.preventDefault();
-      const email = blogLoginEmail.value.trim().toLowerCase();
-      if (!isValidBlogEmail(email)) {
-        blogAuthStatus.textContent = "Enter a valid email address to comment.";
-        blogAuthStatus.className = "blog-auth-status is-error";
-        return;
-      }
-      blogUser = { email };
-      localStorage.setItem("mavennetBlogUser", JSON.stringify(blogUser));
-      blogAuthStatus.textContent = `Signed in as ${email}.`;
-      blogAuthStatus.className = "blog-auth-status is-success";
-      renderBlogPosts();
-    });
-
-    blogPostForm.querySelector("#postDate").value = todayValue;
-    blogPostForm.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const formData = new FormData(blogPostForm);
-      if (formData.get("date") < todayValue) {
-        blogPostForm.querySelector("#postDate").setCustomValidity("Please choose today or a future date.");
-        blogPostForm.querySelector("#postDate").reportValidity();
-        return;
-      }
-      blogPostForm.querySelector("#postDate").setCustomValidity("");
-      const newPost = {
-        id: `local-${Date.now()}`,
-        title: formData.get("title").trim(),
-        category: formData.get("category"),
-        date: formData.get("date"),
-        excerpt: formData.get("excerpt").trim(),
-        content: formData.get("content").trim()
-      };
-
-      savedBlogPosts.unshift(newPost);
-      localStorage.setItem("mavennetBlogPosts", JSON.stringify(savedBlogPosts));
-      blogPostForm.reset();
-      blogPostForm.querySelector("#postDate").value = todayValue;
-      renderBlogPosts();
-      blogPostsGrid.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-
-    renderBlogPosts();
-
-    fetch("/api/facebook-posts", {
-      credentials: "same-origin",
-      headers: { Accept: "application/json" }
-    })
-      .then(response => response.ok ? response.json() : [])
-      .then(posts => {
-        if (Array.isArray(posts)) {
-          importedBlogPosts = posts
-            .filter(post => post && post.title && post.date && post.excerpt && post.content)
-            .map(post => ({
-              id: `facebook-${post.id || post.date}-${post.title}`,
-              title: String(post.title),
-              category: String(post.category || "Facebook"),
-              date: String(post.date).slice(0, 10),
-              excerpt: String(post.excerpt),
-              content: String(post.content)
-            }));
-          renderBlogPosts();
-        }
-      })
-      .catch(() => {});
-  }
 });
 
