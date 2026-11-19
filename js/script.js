@@ -862,6 +862,7 @@ document.addEventListener("DOMContentLoaded", () => {
   courseCards.forEach((card, index) => {
     const heading = card.querySelector(".course-details h3");
     const courseTitle = heading?.textContent.trim();
+    const enrollmentTitle = card.querySelector(".btn-add-cart")?.dataset.course?.trim();
     const courseDescription = card.querySelector(".course-description")?.textContent.trim() || "Course overview not provided.";
     const featureLabels = Array.from(card.querySelectorAll(".course-features .feature"), feature => feature.textContent.replace(/^✓\s*/, "").trim());
     const moduleCount = featureLabels.find(feature => /modules?/i.test(feature)) || "Module count not listed";
@@ -869,8 +870,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const certificate = featureLabels.some(feature => /certificate/i.test(feature))
       ? "Certificate included"
       : "Certificate details not listed";
-    const access = featureLabels.find(feature => /access/i.test(feature)) || "Access details not listed";
-    const learningDetails = courseLearningDetails[courseTitle] || {
+    const learningDetails = courseLearningDetails[enrollmentTitle] || courseLearningDetails[courseTitle] || {
       outline: ["Course concepts and tools", "Guided practice", "Applied learning"],
       impact: "Build skills relevant to practical work in this subject area."
     };
@@ -905,7 +905,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const facts = document.createElement("dl");
     facts.className = "course-detail-facts";
-    [["Duration", duration], ["Course structure", moduleCount], ["Certificate", certificate], ["Access", access]].forEach(([label, value]) => {
+    [["Duration", duration], ["Course structure", moduleCount], ["Certificate", certificate]].forEach(([label, value]) => {
       const fact = document.createElement("div");
       const term = document.createElement("dt");
       const description = document.createElement("dd");
