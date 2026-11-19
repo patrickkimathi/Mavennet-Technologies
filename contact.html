@@ -22,6 +22,7 @@
 <script defer src="js/script.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <!-- ===== Header ===== -->
 <header>
 <nav class="navbar">
@@ -29,43 +30,72 @@
   <img src="images/Mavennet Technologies Logo.png" alt="Mavennet Technologies logo" class="brand-logo" />
   <span>Mavennet Technologies</span>
 </a>
-<ul class="nav-links">
+<ul class="nav-links" id="main-navigation">
           <li><a href="index.html">Home</a></li>
           <li><a href="training-services.html">Digital Academy</a></li>
         
           <li><a href="e-citizen-services.html">Services</a></li>
           <li><a href="contact.html" class="active">Contact</a></li>
 </ul>
-<div class="menu-toggle">&#9776;</div>
+<button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-controls="main-navigation" aria-expanded="false">
+  <span aria-hidden="true">&#9776;</span>
+</button>
 </nav>
 </header>
 
 
 <!-- ===== Contact Section ===== -->
-<main>
+<main id="main-content">
   <section class="contact-hero">
     <div class="hero-text">
+      <p class="eyebrow">Let us work together</p>
       <h1>Get in Touch</h1>
-      <p>Reach out to Mavennet Technologies for analytics, digital strategy, training, or data transformation.</p>
-      <p>We respond promptly and help you choose the right solution for your business goals.</p>
+      <p>Tell us about your analytics, digital strategy, training, or data transformation needs.</p>
+      <p>We usually respond within one business day and will help you choose the right next step.</p>
     </div>
 
     <div class="contact-panel card">
-      <h3>Contact Us</h3>
-      <form id="contactForm" class="contact-form">
-        <label class="required" for="name">Full Name</label>
-        <input id="name" type="text" placeholder="Your Name" required />
+      <h2>Contact Us</h2>
+      <p class="required-note"><span aria-hidden="true">*</span> Required fields</p>
+      <form id="contactForm" class="contact-form" novalidate>
+        <div class="form-field">
+          <label class="required" for="name">Full Name</label>
+          <input id="name" name="name" type="text" placeholder="Your Name" autocomplete="name" required aria-describedby="nameError" />
+          <p class="field-error" id="nameError"></p>
+        </div>
 
-        <label class="required" for="email">Email Address</label>
-        <input id="email" type="email" placeholder="you@company.com" required />
+        <div class="form-field">
+          <label class="required" for="email">Email Address</label>
+          <input id="email" name="email" type="email" placeholder="you@company.com" autocomplete="email" inputmode="email" required aria-describedby="emailError" />
+          <p class="field-error" id="emailError"></p>
+        </div>
 
-        <label for="company">Company</label>
-        <input id="company" type="text" placeholder="Company name" />
+        <div class="form-field">
+          <label for="company">Company</label>
+          <input id="company" name="company" type="text" placeholder="Company name" autocomplete="organization" />
+        </div>
 
-        <label class="required" for="message">How can we help?</label>
-        <textarea id="message" placeholder="Describe your project or question" rows="6" required></textarea>
+        <div class="form-field">
+          <label class="required" for="inquiryType">What can we help with?</label>
+          <select id="inquiryType" name="inquiryType" required aria-describedby="inquiryTypeError">
+            <option value="">Select an inquiry type</option>
+            <option value="Training">Training</option>
+            <option value="Digital Services">Digital services</option>
+            <option value="Analytics Consulting">Analytics consulting</option>
+            <option value="General Question">General question</option>
+          </select>
+          <p class="field-error" id="inquiryTypeError"></p>
+        </div>
+
+        <div class="form-field">
+          <label class="required" for="message">How can we help?</label>
+          <textarea id="message" name="message" placeholder="Describe your project or question" rows="6" required aria-describedby="messageError"></textarea>
+          <p class="field-error" id="messageError"></p>
+        </div>
 
         <button type="submit" class="btn">Send Request</button>
+        <p class="privacy-note">Your details will only be used to respond to this inquiry.</p>
+        <p id="formStatus" class="form-status" role="status" aria-live="polite"></p>
       </form>
     </div>
   </section>
@@ -75,15 +105,18 @@
       <div class="contact-card">
         <h4><i class="fa-solid fa-envelope" aria-hidden="true"></i> Email</h4>
         <p><a href="mailto:mavennettech@gmail.com">mavennettech@gmail.com</a></p>
+        <small>For detailed project briefs</small>
       </div>
       <div class="contact-card">
         <h4><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp</h4>
         <p><a href="https://wa.me/254797666890" target="_blank" rel="noopener">+254 797 666 890</a></p>
+        <small>For quick conversations</small>
       </div>
     
       <div class="contact-card">
         <h4><i class="fa-solid fa-phone" aria-hidden="true"></i> Phone</h4>
         <p><a href="tel:+254797666890">+254 797 666 890</a></p>
+        <small>For scheduled calls</small>
       </div>
     </div>
   </section>

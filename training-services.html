@@ -22,6 +22,7 @@
   <script defer src="js/script.js?v=course-inline-20261004"></script>
 </head>
 <body class="training-page">
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   <!-- ===== Header ===== -->
   <header>
     <nav class="navbar">
@@ -29,22 +30,29 @@
         <img src="images/Mavennet Technologies Logo.png" alt="Mavennet Technologies logo" class="brand-logo" />
         <span><b> Mavennet Technologies</b></span>
       </a>
-      <ul class="nav-links">
+      <ul class="nav-links" id="main-navigation">
         <li><a href="index.html">Home</a></li>
         <li><a href="training-services.html" class="active">Digital Academy</a></li>
     
         <li><a href="e-citizen-services.html">Services</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
-      <div class="menu-toggle">&#9776;</div>
+      <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-controls="main-navigation" aria-expanded="false">
+        <span aria-hidden="true">&#9776;</span>
+      </button>
     </nav>
   </header>
 
-  <main>
+  <main id="main-content">
     <!-- ===== Hero Section ===== -->
     <section class="ecommerce-hero">
       <div class="hero-background">
         <div class="slide active" style="background: linear-gradient(135deg, #6102fa 0%, #0101fa 100%)"></div>
+        <div class="academy-motion-grid" aria-hidden="true"></div>
+        <div class="academy-orb academy-orb-one" aria-hidden="true"></div>
+        <div class="academy-orb academy-orb-two" aria-hidden="true"></div>
+        <div class="academy-data-track track-one" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="academy-data-track track-two" aria-hidden="true"><span></span><span></span><span></span></div>
       </div>
       <div class="hero-overlay"></div>
       <div class="hero-content">
@@ -54,16 +62,29 @@
         <p class="hero-subtitle">Learn at your pace with guided projects and career-ready outcomes and
            Business practical applications.</p>
       </div>
+      <div class="academy-course-stream" aria-hidden="true">
+        <span><i class="fa-solid fa-table"></i> Excel</span>
+        <span><i class="fa-solid fa-chart-column"></i> Power BI</span>
+        <span><i class="fa-solid fa-code"></i> SQL</span>
+        <span><i class="fa-solid fa-brain"></i> AI</span>
+      </div>
     </section>
 
     <section class="academy-spotlight">
       <div class="spotlight-card">
-        <div>
+        <div class="spotlight-copy">
           <p class="eyebrow">Professional learning</p>
-          <h2>Practical training for modern worksapce and businesses</h2>
+          <h2>Practical courses for your next step</h2>
         </div>
-        <p>Expert-led skill-based courses with hands-on projects, step-by-step guidance,  
-          and real world impact</p>
+        <div class="spotlight-details">
+          <p>Choose a skill, practice with real-world projects, and apply what you learn at work.</p>
+          <ul class="spotlight-benefits" aria-label="Course benefits">
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Practical project work</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Options for different skill levels</li>
+            <li><i class="fa-solid fa-check" aria-hidden="true"></i> Certificate availability varies by course</li>
+          </ul>
+          <a class="spotlight-link" href="#courses">Browse courses <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
       </div>
     </section>
 
@@ -106,7 +127,6 @@
               <span class="feature">✓ 13 Modules</span>
               <span class="feature">✓ 40+ Hours</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
             <p class="course-description">Master Excel formulas, functions, pivot tables, Power Query, Power Pivot, dashboards, and data modeling techniques for professional data analysis.</p>
             <div class="course-footer">
@@ -134,7 +154,6 @@
               <span class="feature">✓ 10 Modules</span>
               <span class="feature">✓ 30+ Hours</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
             <p class="course-description">Learn cloud-based data analysis with Google Sheets. Master formulas, pivot tables, data cleaning, visualization, and collaborative dashboards.</p>
             <div class="course-footer">
@@ -157,13 +176,12 @@
             </div>
           </div>
           <div class="course-details">
-            <h3>Microsoft Power BI <p> For Business Intelligence</h3>
+            <h3>Microsoft Power BI for Business Intelligence</h3>
             <p class="course-subtitle">Build Interactive Dashboards & Reports</p>
             <div class="course-features">
               <span class="feature">✓ 10 Modules</span>
               <span class="feature">✓ 35+ Hours</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
             <p class="course-description">Build interactive dashboards, create data models, 
               write DAX measures, and deliver insightful reports with Power BI Desktop and Services.</p>
@@ -186,21 +204,20 @@
             </div>
           </div>
           <div class="course-details">
-            <h3>Digital Marketing and E-Commerce</h3>
-            <p class="course-subtitle">SEO, Social Media & Content Strategy</p>
+            <h3>AI-Powered Digital Marketing &amp; Analytics</h3>
+            <p class="course-subtitle">Campaign Strategy, AI Content &amp; Performance Analytics</p>
             <div class="course-features">
-              <span class="feature">✓ 10 Modules</span>
-              <span class="feature">✓ 24+ Hours</span>
+              <span class="feature">✓ 6 Modules</span>
+              <span class="feature">✓ 18–22 Hours</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
-            <p class="course-description">Learn digital marketing strategies, SEO optimization, social media management, and content creation to grow your online presence.</p>
+            <p class="course-description">Learn digital marketing and e-commerce with campaign tracking, audience analytics, AI-assisted content workflows, and local market context to support measurable ROI.</p>
             <div class="course-footer">
               <div class="price-section">
                 <span class="price">KES 4,500</span>
                
               </div>
-              <button class="btn-add-cart" data-course="Digital Marketing and E-Commerce" data-price="4500">
+              <button class="btn-add-cart" data-course="AI-Powered Digital Marketing &amp; Analytics" data-price="4500">
                 <span>Enroll</span>
               </button>
             </div>
@@ -221,7 +238,6 @@
               <span class="feature">✓ 10 Modules</span>
               <span class="feature">✓ 28+ Hours</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
             <p class="course-description">Master UI/UX design principles, prototyping tools like Figma, user research methods, and create interfaces that users love.</p>
             <div class="course-footer">
@@ -250,7 +266,6 @@
               <span class="feature">✓ 8 Modules</span>
               <span class="feature">✓ 38+ Hours</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
             <p class="course-description">Learn Python programming for data science including pandas, NumPy, Matplotlib, and scikit-learn for real-world data analysis projects.</p>
             <div class="course-footer">
@@ -279,7 +294,6 @@
               <span class="feature">✓ 10 Modules</span>
               <span class="feature">✓ 18+ Hours</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
             <p class="course-description">Learn to read, understand, and communicate data effectively. Essential for professionals who work with data in any field, no technical background required.</p>
             <div class="course-footer">
@@ -308,7 +322,6 @@
               <span class="feature">✓ 9 Modules</span>
               <span class="feature">✓ 32+ Hours</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
             <p class="course-description">Master SQL for data extraction, transformation, and analysis. Learn joins, subqueries, window functions, and optimization techniques for real-world databases.</p>
             <div class="course-footer">
@@ -338,7 +351,6 @@
               <span class="feature">✓ 10 Modules</span>
               <span class="feature">✓ 40+ Hours</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
             <p class="course-description">Create stunning visualizations and interactive dashboards with Tableau. Learn data blending, calculated fields, parameters, and publish insights for stakeholders.</p>
             <div class="course-footer">
@@ -367,7 +379,6 @@
               <span class="feature">✓ 10 Modules</span>
               <span class="feature">✓ 50+ Hours</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
             <p class="course-description">Master machine learning algorithms, model evaluation, hyperparameter tuning, and deployment. Build classifiers, regressors, and clustering models with scikit-learn and TensorFlow.</p>
             <div class="course-footer">
@@ -396,7 +407,6 @@
               <span class="feature">✓ 6 Modules</span>
               <span class="feature">✓ 26+ Hours</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
             <p class="course-description">Learn data quality principles, validation techniques, profiling, cleansing, and monitoring. Ensure your datasets are accurate, complete, and ready for analysis.</p>
             <div class="course-footer">
@@ -425,7 +435,6 @@
               <span class="feature">✓ 10 Modules</span>
               <span class="feature">✓ 35+ Hours</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
             <p class="course-description">Understand AI technologies, their business applications, ethical considerations, and implementation strategies. No coding required—focus on strategic decision-making.</p>
             <div class="course-footer">
@@ -433,35 +442,6 @@
                 <span class="price">KES 5,500</span>
               </div>
               <button class="btn-add-cart" data-course="AI For Business" data-price="5500">
-                <span>Enroll</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Course Card 13 -->
-        <div class="course-card" data-price="5500" data-pathways="ai-emerging">
-          <div class="course-image-wrapper">
-            <div class="course-badge">New</div>
-            <div class="course-image" aria-hidden="true">
-              <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80" alt="AI for professionals" loading="lazy" />
-            </div>
-          </div>
-          <div class="course-details">
-            <h3>AI For Professionals</h3>
-            <p class="course-subtitle">Work Smarter with Practical AI Skills</p>
-            <div class="course-features">
-              <span class="feature">✓ 10 Modules</span>
-              <span class="feature">✓ 35+ Hours</span>
-              <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
-            </div>
-            <p class="course-description">Learn how to apply AI tools responsibly in everyday professional work, improve productivity, and make better decisions without needing to code.</p>
-            <div class="course-footer">
-              <div class="price-section">
-                <span class="price">KES 5,500</span>
-              </div>
-              <button class="btn-add-cart" data-course="AI For Professionals" data-price="5500">
                 <span>Enroll</span>
               </button>
             </div>
@@ -483,7 +463,6 @@
               <span class="feature">✓ 10 Modules</span>
               <span class="feature">✓ Guided exercises</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
             <p class="course-description">Learn how to use Microsoft Copilot to draft, analyze, summarize, and automate everyday tasks across your professional workflow.</p>
             <div class="course-footer">
@@ -512,7 +491,6 @@
               <span class="feature">✓ 10 Modules</span>
               <span class="feature">✓ Hands-on projects</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
             <p class="course-description">Develop advanced skills across Microsoft 365 tools, collaboration workflows, productivity features, and secure digital workplace practices.</p>
             <div class="course-footer">
@@ -541,7 +519,6 @@
               <span class="feature">✓ 6 Modules</span>
               <span class="feature">✓ 15+ Hours</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
             <p class="course-description">Learn Canva fundamentals, layout, typography, color, templates, and social media design to create polished visual content for any brand.</p>
             <div class="course-footer">
@@ -571,7 +548,6 @@
               <span class="feature">✓ 8 Modules</span>
               <span class="feature">✓ 20+ Hours</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
             <p class="course-description">Build practical Photoshop skills in image editing, retouching, compositing, typography, and professional social media graphics.</p>
             <div class="course-footer">
@@ -602,7 +578,6 @@
               <span class="feature">✓ 9 Modules</span>
               <span class="feature">✓ 24+ Hours</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
             <p class="course-description">Learn vector design, logo creation, illustration, typography, and layout techniques for scalable brand and marketing assets.</p>
             <div class="course-footer">
@@ -626,20 +601,19 @@
             </div>
           </div>
           <div class="course-details">
-            <h3>Cybersecurity Awareness</h3>
-            <p class="course-subtitle">Stay Safe Online at Work and Home</p>
+            <h3>Digital &amp; Data Security Essentials for Teams</h3>
+            <p class="course-subtitle">Digital &amp; Data Security Essentials for Teams</p>
             <div class="course-features">
               <span class="feature">✓ 5 Modules</span>
-              <span class="feature">✓ 10+ Hours</span>
+              <span class="feature">✓ 12–16 Hours</span>
               <span class="feature">✓ Certificate</span>
-              <span class="feature">✓ Lifetime Access</span>
             </div>
-            <p class="course-description">Build practical cybersecurity awareness by learning how to spot phishing, protect accounts, handle data safely, and respond to common online threats.</p>
+            <p class="course-description">Build team cyber hygiene through password and device security, phishing prevention, safe access control, customer-data protection, and incident response.</p>
             <div class="course-footer">
               <div class="price-section">
                 <span class="price">KES 3,000</span>
               </div>
-              <button class="btn-add-cart" data-course="Cybersecurity Awareness" data-price="3000">
+              <button class="btn-add-cart" data-course="Digital &amp; Data Security Essentials for Teams" data-price="3000">
                 <span>Enroll</span>
               </button>
             </div>
@@ -698,6 +672,234 @@
                 <span class="price">KES 7,000</span>
               </div>
               <button class="btn-add-cart" data-course="Vibe Coding for Adults" data-price="7000">
+                <span>Enroll</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Advanced Excel and Power BI Package -->
+        <div class="course-card" data-price="10000" data-pathways="data-analytics business-intelligence">
+          <div class="course-image-wrapper">
+            <div class="course-badge">Advanced</div>
+            <div class="course-image" aria-hidden="true">
+              <img src="images/DATA SKILLS EXCEL GOOGLE SHEETS POWER BI.png" alt="Advanced Excel and Power BI package" loading="lazy" />
+            </div>
+          </div>
+          <div class="course-details">
+            <h3>Advanced Package: Excel and Power BI</h3>
+            <p class="course-subtitle">Complete Data Analysis and Reporting Package</p>
+            <div class="course-features">
+              <span class="feature">✓ Excel and Power BI</span>
+              <span class="feature">✓ Data modeling</span>
+              <span class="feature">✓ Interactive dashboards</span>
+              <span class="feature">✓ Certificate</span>
+            </div>
+            <p class="course-description">Combine advanced Excel analysis with Power BI reporting. Learn Power Query, DAX, data modeling, dashboards, and executive-ready presentations.</p>
+            <div class="course-footer">
+              <div class="price-section">
+                <span class="price">KES 10,000</span>
+              </div>
+              <button class="btn-add-cart" data-course="Advanced Package: Excel and Power BI" data-price="10000">
+                <span>Enroll</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Analysis with AI -->
+        <div class="course-card" data-price="5000" data-pathways="data-analytics ai-emerging">
+          <div class="course-image-wrapper">
+            <div class="course-badge">New</div>
+            <div class="course-image" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80" alt="Data analysis with artificial intelligence" loading="lazy" />
+            </div>
+          </div>
+          <div class="course-details">
+            <h3>Data Analysis with AI</h3>
+            <p class="course-subtitle">Use AI Tools to Accelerate Analytical Workflows</p>
+            <div class="course-features">
+              <span class="feature">✓ AI-assisted analysis</span>
+              <span class="feature">✓ Prompting for insights</span>
+              <span class="feature">✓ Responsible AI</span>
+              <span class="feature">✓ Practical projects</span>
+            </div>
+            <p class="course-description">Use AI responsibly to explore datasets, prepare reports, explain patterns, automate repetitive analysis, and turn findings into clear decisions.</p>
+            <div class="course-footer">
+              <div class="price-section">
+                <span class="price">KES 5,000</span>
+              </div>
+              <button class="btn-add-cart" data-course="Data Analysis with AI" data-price="5000">
+                <span>Enroll</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Google Apps Script -->
+        <div class="course-card" data-price="3000" data-pathways="digital-creative data-analytics">
+          <div class="course-image-wrapper">
+            <div class="course-badge">New</div>
+            <div class="course-image" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=900&q=80" alt="Google Apps Script automation" loading="lazy" />
+            </div>
+          </div>
+          <div class="course-details">
+            <h3>Apps Script</h3>
+            <p class="course-subtitle">Automate Sheets, Docs, Gmail, and Forms</p>
+            <div class="course-features">
+              <span class="feature">✓ JavaScript basics</span>
+              <span class="feature">✓ Spreadsheet automation</span>
+              <span class="feature">✓ Forms and workflows</span>
+              <span class="feature">✓ Practical projects</span>
+            </div>
+            <p class="course-description">Automate Google Workspace using Apps Script. Build custom functions, process spreadsheet data, manage forms, send notifications, and connect services.</p>
+            <div class="course-footer">
+              <div class="price-section">
+                <span class="price">KES 3,000</span>
+              </div>
+              <button class="btn-add-cart" data-course="Apps Script" data-price="3000">
+                <span>Enroll</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SQL and Power BI -->
+        <div class="course-card" data-price="15000" data-pathways="data-analytics business-intelligence">
+          <div class="course-image-wrapper">
+            <div class="course-badge popular">Popular</div>
+            <div class="course-image" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=900&q=80" alt="SQL and Power BI business intelligence" loading="lazy" />
+            </div>
+          </div>
+          <div class="course-details">
+            <h3>SQL and Power BI</h3>
+            <p class="course-subtitle">From Database Queries to Interactive Reports</p>
+            <div class="course-features">
+              <span class="feature">✓ SQL querying</span>
+              <span class="feature">✓ Power BI modeling</span>
+              <span class="feature">✓ DAX and dashboards</span>
+              <span class="feature">✓ End-to-end project</span>
+            </div>
+            <p class="course-description">Move from SQL data extraction through transformation, modeling, DAX, and visualization to create complete business intelligence reports.</p>
+            <div class="course-footer">
+              <div class="price-section">
+                <span class="price">KES 15,000</span>
+              </div>
+              <button class="btn-add-cart" data-course="SQL and Power BI" data-price="15000">
+                <span>Enroll</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Business and Financial Analytics for SMEs -->
+        <div class="course-card" data-price="4000" data-pathways="data-analytics business-intelligence">
+          <div class="course-image-wrapper">
+            <div class="course-badge">SME Focus</div>
+            <div class="course-image" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=900&q=80" alt="Business and financial analytics for SMEs" loading="lazy" />
+            </div>
+          </div>
+          <div class="course-details">
+            <h3>Business &amp; Financial Analytics for SMEs</h3>
+            <p class="course-subtitle">Reporting for Retail, SACCOs, Distributors &amp; Service Firms</p>
+            <div class="course-features">
+              <span class="feature">✓ 6 Modules</span>
+              <span class="feature">✓ 20–24 Hours</span>
+              <span class="feature">✓ Certificate</span>
+            </div>
+            <p class="course-description">Use practical financial and sales data to track cash flow, monitor KPIs, forecast performance, and prepare decision-ready reports for Kenyan SMEs.</p>
+            <div class="course-footer">
+              <div class="price-section">
+                <span class="price">KES 4,000</span>
+              </div>
+              <button class="btn-add-cart" data-course="Business &amp; Financial Analytics for SMEs" data-price="4000">
+                <span>Enroll</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Visualization and Storytelling -->
+        <div class="course-card" data-price="4000" data-pathways="business-intelligence data-analytics">
+          <div class="course-image-wrapper">
+            <div class="course-badge popular">Popular</div>
+            <div class="course-image" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=900&q=80" alt="Data visualization and executive storytelling" loading="lazy" />
+            </div>
+          </div>
+          <div class="course-details">
+            <h3>Data Visualization &amp; Storytelling</h3>
+            <p class="course-subtitle">Clear Executive Dashboards in Power BI or Tableau</p>
+            <div class="course-features">
+              <span class="feature">✓ 6 Modules</span>
+              <span class="feature">✓ 22–26 Hours</span>
+              <span class="feature">✓ Certificate</span>
+            </div>
+            <p class="course-description">Move beyond charts to turn raw data into focused dashboards, clear narratives, and practical recommendations for business decision-makers.</p>
+            <div class="course-footer">
+              <div class="price-section">
+                <span class="price">KES 4,000</span>
+              </div>
+              <button class="btn-add-cart" data-course="Data Visualization &amp; Storytelling" data-price="4000">
+                <span>Enroll</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Automation and ETL -->
+        <div class="course-card" data-price="6000" data-pathways="data-analytics business-intelligence">
+          <div class="course-image-wrapper">
+            <div class="course-badge">New</div>
+            <div class="course-image" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&w=900&q=80" alt="Data automation and ETL workflows" loading="lazy" />
+            </div>
+          </div>
+          <div class="course-details">
+            <h3>Data Automation &amp; ETL Basics</h3>
+            <p class="course-subtitle">Automate Reporting from Multiple Data Sources</p>
+            <div class="course-features">
+              <span class="feature">✓ 6 Modules</span>
+              <span class="feature">✓ 18–22 Hours</span>
+              <span class="feature">✓ Certificate</span>
+            </div>
+            <p class="course-description">Automate repetitive extraction, cleaning, transformation, and refresh tasks so reporting becomes faster, more consistent, and easier to maintain.</p>
+            <div class="course-footer">
+              <div class="price-section">
+                <span class="price">KES 6,000</span>
+              </div>
+              <button class="btn-add-cart" data-course="Data Automation &amp; ETL Basics" data-price="6000">
+                <span>Enroll</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Applied AI and Workflow Automation -->
+        <div class="course-card" data-price="6000" data-pathways="ai-emerging digital-creative">
+          <div class="course-image-wrapper">
+            <div class="course-badge">New</div>
+            <div class="course-image" aria-hidden="true">
+              <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=900&q=80" alt="Applied AI and professional workflow automation" loading="lazy" />
+            </div>
+          </div>
+          <div class="course-details">
+            <h3>Applied AI &amp; Workflow Automation</h3>
+            <p class="course-subtitle">Use AI Assistants Safely for Professional Work</p>
+            <div class="course-features">
+              <span class="feature">✓ 6 Modules</span>
+              <span class="feature">✓ 16–20 Hours</span>
+              <span class="feature">✓ Certificate</span>
+            </div>
+            <p class="course-description">Apply AI assistants and automation tools to summarize reports, draft communications, and accelerate routine work while protecting customer records and personal data.</p>
+            <div class="course-footer">
+              <div class="price-section">
+                <span class="price">KES 6,000</span>
+              </div>
+              <button class="btn-add-cart" data-course="Applied AI &amp; Workflow Automation" data-price="6000">
                 <span>Enroll</span>
               </button>
             </div>

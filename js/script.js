@@ -10,7 +10,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (menuToggle && navLinks) {
     menuToggle.addEventListener("click", () => {
-      navLinks.classList.toggle("active");
+      const isOpen = navLinks.classList.toggle("active");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && navLinks.classList.contains("active")) {
+        navLinks.classList.remove("active");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.focus();
+      }
+    });
+
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("active");
+        menuToggle.setAttribute("aria-expanded", "false");
+      });
     });
   }
 
@@ -77,39 +93,63 @@ document.addEventListener("DOMContentLoaded", () => {
   // ===============================
   const contactForm = document.getElementById("contactForm");
   if (contactForm) {
+    const requestedCourse = new URLSearchParams(window.location.search).get("course");
+    if (requestedCourse) {
+      const inquiryType = contactForm.querySelector("#inquiryType");
+      const message = contactForm.querySelector("#message");
+      if (inquiryType) inquiryType.value = "Training";
+      if (message) message.value = `I would like to request details and pricing for the ${requestedCourse} course.`;
+    }
+
     contactForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const name = contactForm.querySelector('input[type="text"]');
-      const email = contactForm.querySelector('input[type="email"]');
-      const company = contactForm.querySelector('#company');
-      const message = contactForm.querySelector("textarea");
-
+      const name = contactForm.querySelector("#name");
+      const email = contactForm.querySelector("#email");
+      const company = contactForm.querySelector("#company");
+      const inquiryType = contactForm.querySelector("#inquiryType");
+      const message = contactForm.querySelector("#message");
+      const formStatus = contactForm.querySelector("#formStatus");
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      let isValid = true;
 
-      if (name.value.trim().length < 3) {
-        alert("⚠️ Please enter a valid name (at least 3 characters).");
-        isValid = false;
+      const fields = [
+        { element: name, error: "#nameError", validate: value => value.length >= 3, text: "Please enter your full name (at least 3 characters)." },
+        { element: email, error: "#emailError", validate: value => emailPattern.test(value), text: "Please enter a valid email address." },
+        { element: inquiryType, error: "#inquiryTypeError", validate: value => value.length > 0, text: "Please select an inquiry type." },
+        { element: message, error: "#messageError", validate: value => value.length >= 10, text: "Please describe your request in at least 10 characters." }
+      ];
+
+      let firstInvalid = null;
+      fields.forEach(field => {
+        const value = field.element.value.trim();
+        const error = contactForm.querySelector(field.error);
+        const isValid = field.validate(value);
+        field.element.classList.toggle("is-invalid", !isValid);
+        field.element.setAttribute("aria-invalid", String(!isValid));
+        error.textContent = isValid ? "" : field.text;
+        if (!isValid && !firstInvalid) firstInvalid = field.element;
+      });
+
+      formStatus.className = "form-status";
+      if (firstInvalid) {
+        formStatus.textContent = "Please correct the highlighted fields.";
+        formStatus.classList.add("error");
+        firstInvalid.focus();
+        return;
       }
 
-      if (!emailPattern.test(email.value.trim())) {
-        alert("⚠️ Please enter a valid email address.");
-        isValid = false;
-      }
+      const submitButton = contactForm.querySelector('button[type="submit"]');
+      submitButton.disabled = true;
+      submitButton.textContent = "Preparing Request...";
 
-      if (message.value.trim().length < 10) {
-        alert("⚠️ Your message should be at least 10 characters long.");
-        isValid = false;
-      }
-
-      if (isValid) {
-        const subject = `Contact request from ${name.value.trim()}`;
-        const body = `Name: ${name.value.trim()}\nEmail: ${email.value.trim()}\nCompany: ${company.value.trim() || 'N/A'}\n\nMessage:\n${message.value.trim()}`;
+      const subject = `Contact request from ${name.value.trim()} — ${inquiryType.value}`;
+      const body = `Name: ${name.value.trim()}\nEmail: ${email.value.trim()}\nCompany: ${company.value.trim() || "N/A"}\nInquiry type: ${inquiryType.value}\n\nMessage:\n${message.value.trim()}`;
         const mailtoLink = `mailto:mavennetech@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        formStatus.textContent = "Opening your email application to send the request.";
+        formStatus.classList.add("success");
         window.location.href = mailtoLink;
-        contactForm.reset();
-      }
+        submitButton.disabled = false;
+        submitButton.textContent = "Send Request";
     });
   }
 
@@ -464,6 +504,110 @@ document.addEventListener("DOMContentLoaded", () => {
     || card.dataset.pathways?.split(/\s+/).includes(selectedPathway);
 
   const courseLearningDetails = {
+    "Business & Financial Analytics for SMEs": {
+      outline: [
+        "1. SME Financial & Operational Foundations: revenue, gross margin, operating expenses, working capital, and key KPIs.",
+        "2. Preparing M-Pesa & Point-of-Sale Data: exports, cleaning, date and amount standardization, and transaction reconciliation.",
+        "3. Cash-Flow Tracking & Liquidity Management: inflows, outflows, cash bottlenecks, and rolling weekly/monthly trackers.",
+        "4. Sales, Product & Customer Profitability: top products/services, repeat customers, seasonality, and discount leakage.",
+        "5. Budgeting & Simple Forecasting: revenue and expense budgets, budget-versus-actual analysis, and scenarios.",
+        "6. Executive Reporting & Decision Briefs: summary dashboards and clear action steps for business owners.",
+        "Capstone: end-to-end SME sales, cash-flow and M-Pesa reconciliation dashboard."
+      ],
+      impact: "Help SME owners and teams turn sales and financial records into clear decisions."
+    },
+    "Data Visualization & Storytelling": {
+      outline: [
+        "1. Principles of Effective Visual Design: chart selection, color hierarchy, decluttering, and responsive layouts.",
+        "2. Data Modeling & Clean Relationships: fact and dimension tables, date tables, and aggregation traps.",
+        "3. Calculated Metrics & Interactive Logic: KPIs, period comparisons, top-N rankings, and dynamic filters.",
+        "4. Designing Executive & Operational Dashboards: KPI hierarchy, layout, and drill-through detail.",
+        "5. Data Storytelling & Narrative Structure: business questions, insight framing, anomalies, and honest visuals.",
+        "6. Publishing, Sharing & Stakeholder Walkthroughs: secure sharing, feedback, and clear recommendations.",
+        "Capstone: executive business performance dashboard and 3-minute data-story presentation."
+      ],
+      impact: "Convert technical analysis into concise explanations and recommendations leaders can act on."
+    },
+    "Data Automation & ETL Basics": {
+      outline: [
+        "1. Why Automate Manual Reporting: copy-paste risks, version control, and reliable ETL workflows.",
+        "2. Extracting Data from Multiple Sources: CSV, Excel, spreadsheets, databases, and web exports.",
+        "3. Automated Cleaning & Transformation: text and date standardization, splitting, unpivoting, and duplicates.",
+        "4. Scheduled Refreshes & Workflow Pipelines: repeatable refresh steps and separation of raw and final data.",
+        "5. Error Handling & Data Validation: broken schemas, unexpected nulls, and out-of-range values.",
+        "6. Documentation & Handover: naming conventions, workflow diagrams, and maintenance checklists.",
+        "Capstone: automated multi-source weekly report pipeline."
+      ],
+      impact: "Reduce manual copying and refreshing while making recurring reports more reliable."
+    },
+    "Applied AI & Workflow Automation": {
+      outline: [
+        "1. Practical AI Fundamentals for Work: strengths, drafting and summarizing, and hallucination or logic risks.",
+        "2. Prompting for Precision & Consistency: roles, context, constraints, examples, and output formats.",
+        "3. Research, Summarization & Document Workflows: meeting notes, reports, policies, emails, and action items.",
+        "4. No-Code Workflow Automation Basics: triggers and actions across forms, spreadsheets, email, docs, and notifications.",
+        "5. Human-in-the-Loop Quality Control: fact-checking, tone, review, and non-negotiable human judgment.",
+        "6. Privacy, Security & Data Protection: confidential data, Kenya Data Protection Act principles, and safe team norms.",
+        "Capstone: personal or team productivity playbook and automated daily/weekly workflow."
+      ],
+      impact: "Help professionals save time with AI without bypassing accuracy, privacy, or governance requirements."
+    },
+    "Advanced Package: Excel and Power BI": {
+      outline: [
+        "1. Advanced Excel formulas, functions, tables, and analysis tools.",
+        "2. Power Query for cleaning, combining, and refreshing data.",
+        "3. Excel data models and Power Pivot concepts.",
+        "4. Power BI Desktop setup and data connections.",
+        "5. Data modeling, relationships, and star-schema design.",
+        "6. DAX measures for KPIs and comparisons.",
+        "7. Interactive reports, filters, and dashboard design.",
+        "8. Publishing, sharing, and refresh workflows.",
+        "9. Executive-ready end-to-end project."
+      ],
+      impact: "Turn spreadsheet and operational data into reliable analysis and decision-ready dashboards."
+    },
+    "Data Analysis with AI": {
+      outline: [
+        "1. AI and data analysis fundamentals.",
+        "2. Preparing and exploring datasets.",
+        "3. Prompting AI for analysis and explanation.",
+        "4. Cleaning and summarizing data with AI assistance.",
+        "5. Spotting patterns and validating insights.",
+        "6. Creating charts and report narratives.",
+        "7. Automating repetitive analytical workflows.",
+        "8. Accuracy, privacy, bias, and responsible-use checks.",
+        "9. Applied data-analysis project."
+      ],
+      impact: "Accelerate routine analysis while maintaining verification, transparency, and human judgment."
+    },
+    "Apps Script": {
+      outline: [
+        "1. JavaScript fundamentals for Apps Script.",
+        "2. Automating Google Sheets and custom menus.",
+        "3. Reading, writing, and transforming spreadsheet data.",
+        "4. Working with Google Forms and Drive.",
+        "5. Sending Gmail and document notifications.",
+        "6. Connecting Google Workspace services.",
+        "7. Handling triggers and scheduled workflows.",
+        "8. Debugging and deployment.",
+        "9. End-to-end workflow automation project."
+      ],
+      impact: "Replace repetitive Google Workspace tasks with reusable, time-saving automation."
+    },
+    "SQL and Power BI": {
+      outline: [
+        "1. SQL fundamentals and relational database concepts.",
+        "2. Filtering, grouping, joins, CTEs, and subqueries.",
+        "3. SQL queries for reusable business datasets.",
+        "4. Connecting SQL outputs to Power BI.",
+        "5. Power Query and data preparation.",
+        "6. Relationships and data modeling.",
+        "7. DAX measures and calculation patterns.",
+        "8. Interactive reports and dashboard design.",
+        "9. End-to-end SQL and Power BI project."
+      ],
+      impact: "Build a complete pipeline from database extraction to business dashboards and reporting."
+    },
     "Excel For Data Analysis": {
       outline: [
         "1. Introduction to Excel for Data Analysis: analytics workflows, interface, workbooks, and navigation.",
@@ -512,20 +656,17 @@ document.addEventListener("DOMContentLoaded", () => {
       ],
       impact: "Turn operational data into clear reports that teams can use to monitor performance."
     },
-    "Digital Marketing and E-Commerce": {
+    "AI-Powered Digital Marketing & Analytics": {
       outline: [
-        "1. Digital Marketing Fundamentals.",
-        "2. Market & Customer Research.",
-        "3. Content Marketing & Social Media.",
-        "4. SEO & Search Marketing.",
-        "5. Email & Mobile Marketing.",
-        "6. Paid Advertising & Campaign Management.",
-        "7. E-Commerce Strategy & Platforms.",
-        "8. Online Payments & Customer Experience.",
-        "9. Marketing Analytics & Performance Measurement.",
-        "10. Digital Marketing & E-Commerce Project."
+        "1. Audience Research & Positioning: personas, pain points, local messaging, and value propositions.",
+        "2. AI-Assisted Content & Campaign Production: ad copy, video scripts, landing pages, and social calendars.",
+        "3. Campaign Tracking & Funnel Analytics: impressions, reach, CTR, CPC, CPA, conversions, and attribution.",
+        "4. Testing, Optimization & Creative Iteration: structured A/B tests and cutting underperforming spend.",
+        "5. Social & Web Performance Reporting: weekly and monthly scorecards tied to leads or sales.",
+        "6. Ethics, Authenticity & Compliance: honest claims, disclosures, spam avoidance, and customer trust.",
+        "Capstone: full-funnel campaign plan, AI content kit, and performance tracking dashboard."
       ],
-      impact: "Improve how a business attracts, engages, and measures its online audience."
+      impact: "Help marketers create better campaigns and prove their impact with data rather than activity alone."
     },
     "UI/UX Design Masterclass": {
       outline: [
@@ -697,9 +838,16 @@ document.addEventListener("DOMContentLoaded", () => {
       outline: ["Vector drawing and shape tools", "Logo, icon, and illustration design", "Typography and scalable layouts"],
       impact: "Create scalable brand and marketing graphics that remain crisp across sizes."
     },
-    "Cybersecurity Awareness": {
-      outline: ["Recognize phishing and common threats", "Protect accounts and sensitive data", "Respond to common security incidents"],
-      impact: "Build everyday habits that reduce common security and data-handling risks."
+    "Digital & Data Security Essentials for Teams": {
+      outline: [
+        "1. Today's Threat Landscape: phishing, social engineering, fake invoices, malware, and credential stuffing.",
+        "2. Account, Password & Device Hygiene: passphrases, password managers, MFA, updates, and device security.",
+        "3. Protecting Customer, Financial & Business Data: permissions, safe links, backups, and data-protection duties.",
+        "4. Safe Cloud, Remote Work & AI Usage: public networks, third-party apps, browser extensions, and AI data leaks.",
+        "5. Spotting & Responding to Incidents: compromise warnings, containment, credential resets, escalation, and culture.",
+        "Capstone: team security checklist and incident-response quick guide."
+      ],
+      impact: "Give teams practical habits to reduce account compromise and protect customer and business records."
     },
     "Vibe Coding for Kids": {
       outline: ["Explore coding ideas and clear prompts", "Build small interactive digital projects", "Test, debug, and improve creations"],

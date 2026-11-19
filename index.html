@@ -50,7 +50,7 @@
       <img src="images/Mavennet Technologies Logo.png" alt="Mavennet Technologies logo" class="brand-logo" />
       <span>Mavennet Technologies</span>
     </a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="main-navigation">
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="training-services.html">Digital Academy</a></li>
     
@@ -58,7 +58,9 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
     <!-- Hamburger icon -->
-    <div class="menu-toggle">&#9776;</div>
+    <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-controls="main-navigation" aria-expanded="false">
+      <span aria-hidden="true">&#9776;</span>
+    </button>
   </nav>
 </header>
 
@@ -66,10 +68,10 @@
   <main class="home-page" id="main-content" tabindex="-1">
     <section class="home-hero home-hero-animated">
       <div class="home-hero-copy">
-        <span class="eyebrow">Data Analytics • AI • Digital Skills</span>
-        <h1>Build Practical Data Analytics, AI & Digital Skills.</h1>
+        <span class="eyebrow">Mavennet Learning</span>
+        <h1>Build Skills that Increase Productivity and Career Growth.</h1>
         <p>
-          Learn data analytics and emerging technologies through structured, hands-on training. Build confidence with tools used to analyze information, communicate insights, and work smarter.
+          Practical skills in data analytics, artificial intelligence, and digital work. Learn at your pace through guided projects and workplace-ready applications.
         </p>
         <div class="hero-buttons">
           <a href="training-services.html" class="btn btn-primary">Browse All Courses</a>
@@ -82,77 +84,57 @@
         </ul>
       </div>
 
-      <div class="home-hero-visual" aria-label="Illustrative retail sales dashboard">
-        <div class="dashboard-card">
-          <div class="dashboard-topbar">
-            <span class="dot blue"></span>
-            <span class="dot orange"></span>
-            <span class="dot green"></span>
-          </div>
+      <div class="home-hero-visual" role="img" aria-label="Animated illustration showing raw data moving through analytics and artificial intelligence into a clear business insight">
+        <div class="motion-grid" aria-hidden="true"></div>
+        <div class="orbit orbit-one" aria-hidden="true"></div>
+        <div class="orbit orbit-two" aria-hidden="true"></div>
 
-          <div class="retail-dashboard-heading">
+        <div class="data-node node-excel" aria-hidden="true">
+          <span class="node-icon">X</span>
+          <span>Data</span>
+        </div>
+        <div class="data-node node-chart" aria-hidden="true">
+          <span class="node-icon"><i class="fa-solid fa-chart-column"></i></span>
+          <span>Analyze</span>
+        </div>
+        <div class="data-node node-ai" aria-hidden="true">
+          <span class="node-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></span>
+          <span>AI</span>
+        </div>
+
+        <div class="insight-orb" aria-hidden="true">
+          <div class="insight-core">
+            <i class="fa-solid fa-brain"></i>
+            <span>INSIGHT</span>
+          </div>
+        </div>
+
+        <div class="analytics-card" aria-hidden="true">
+          <div class="analytics-card-heading">
             <div>
-              <p>SALES PERFORMANCE</p>
-              <h3>Store overview</h3>
+              <small>BUSINESS PERFORMANCE</small>
+              <strong>Growth analysis</strong>
             </div>
-            <span class="dashboard-sample">Sales Data</span>
-            </span>
+            <span>LIVE</span>
           </div>
-
-          <div class="retail-kpis">
-            <div class="retail-kpi retail-kpi-sales">
-              <span>Net sales · 7 days</span>
-              <strong>KES 4.82M</strong>
-              <small>+12.4% vs prior week</small>
-            </div>
-            <div class="retail-kpi">
-              <span>Orders</span>
-              <strong>1,284</strong>
-              <small>+8.1% vs prior week</small>
-            </div>
-            <div class="retail-kpi">
-              <span>Average order</span>
-              <strong>KES 3,754</strong>
-              <small>Per transaction</small>
-            </div>
+          <div class="analytics-metrics">
+            <div><small>Revenue</small><strong>+18%</strong></div>
+            <div><small>Efficiency</small><strong>+24%</strong></div>
           </div>
-
-          <section class="retail-chart-panel" aria-labelledby="retail-chart-title">
-            <div class="retail-chart-heading">
-              <strong id="retail-chart-title">Daily sales</strong>
-              <span>KES · thousands</span>
-            </div>
-            <div class="retail-chart" role="img" aria-label="Seven-day sales: Monday 560 thousand, Tuesday 620 thousand, Wednesday 590 thousand, Thursday 740 thousand, Friday 810 thousand, Saturday 680 thousand, Sunday 820 thousand Kenyan shillings">
-              <div class="retail-chart-axis" aria-hidden="true">
-                <span>900</span><span>600</span><span>300</span><span>0</span>
-              </div>
-              <div class="retail-chart-plot">
-                <div class="retail-chart-gridlines" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-                <div class="retail-chart-bars" aria-hidden="true">
-                  <div class="retail-chart-column"><span style="--bar-height: 62%"></span><small>Mon</small></div>
-                  <div class="retail-chart-column"><span style="--bar-height: 69%"></span><small>Tue</small></div>
-                  <div class="retail-chart-column"><span style="--bar-height: 66%"></span><small>Wed</small></div>
-                  <div class="retail-chart-column"><span style="--bar-height: 82%"></span><small>Thu</small></div>
-                  <div class="retail-chart-column"><span style="--bar-height: 90%"></span><small>Fri</small></div>
-                  <div class="retail-chart-column"><span style="--bar-height: 76%"></span><small>Sat</small></div>
-                  <div class="retail-chart-column"><span style="--bar-height: 91%"></span><small>Sun</small></div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <div class="retail-category-section">
-            <div class="retail-category-heading">
-              <strong>Sales by category</strong>
-              <span>Share of total</span>
-            </div>
-            <div class="retail-category-grid">
-              <span><i class="category-dot grocery"></i>Grocery <strong>38%</strong></span>
-              <span><i class="category-dot electronics"></i>Electronics <strong>29%</strong></span>
-              <span><i class="category-dot fashion"></i>Fashion <strong>20%</strong></span>
-              <span><i class="category-dot other"></i>Other <strong>13%</strong></span>
-            </div>
+          <div class="animated-chart">
+            <span style="--height: 36%; --delay: 0.1s"></span>
+            <span style="--height: 52%; --delay: 0.2s"></span>
+            <span style="--height: 47%; --delay: 0.3s"></span>
+            <span style="--height: 68%; --delay: 0.4s"></span>
+            <span style="--height: 76%; --delay: 0.5s"></span>
+            <span style="--height: 92%; --delay: 0.6s"></span>
           </div>
+        </div>
+
+        <div class="insight-badge" aria-hidden="true">
+          <i class="fa-solid fa-arrow-trend-up"></i>
+          <div><small>AI Recommendation</small><strong>Growth opportunity found</strong></div>
+        </div>
       </div>
     </section>
 
